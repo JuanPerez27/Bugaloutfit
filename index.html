@@ -48,12 +48,14 @@ h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-style:ita
 footer{margin-top:40px;text-align:center;color:var(--muted);font-size:14px}
 .fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:5;background:var(--text);color:#000;border:0;border-radius:999px;padding:14px 20px;font-weight:500;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.6)}
 .fab b{background:#000;color:var(--text);border-radius:999px;padding:1px 8px;margin-left:8px;font-weight:500}
-dialog{padding:0;border:1px solid var(--text);background:var(--bg);color:var(--text);width:100%;max-width:920px;max-height:calc(100dvh - 24px);overflow:auto}
+dialog{padding:0;border:1px solid var(--text);background:var(--bg);color:var(--text);width:100%;max-width:920px;max-height:calc(100dvh - 24px);overflow:auto;overflow-x:hidden}
 dialog::backdrop{background:rgba(0,0,0,.82)}
 dialog.cart{margin:0 0 0 auto;height:100dvh;max-height:none;max-width:420px}
 .close{position:sticky;top:0;z-index:2;display:block;margin:0 0 0 auto;width:44px;height:44px;border:0;border-bottom:1px solid var(--line);border-left:1px solid var(--line);background:var(--bg);font-size:20px;cursor:pointer}
-.dbody{display:grid;grid-template-columns:1fr;gap:20px;padding:16px 20px 20px}
-.main{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid var(--line);background:var(--surface) var(--logo) center/60% no-repeat}
+.dbody{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;padding:16px 20px 20px}
+.dbody>*{min-width:0}
+.gal{width:100%;max-width:480px;margin:0 auto}
+.main{display:block;width:100%;max-width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid var(--line);background:var(--surface) var(--logo) center/60% no-repeat}
 .thumbs{display:flex;gap:8px;margin-top:8px}
 .thumbs button{width:64px;padding:0;border:1px solid var(--line);background:none;cursor:pointer;opacity:.6}
 .thumbs button[aria-current="true"]{opacity:1;border-color:var(--text)}
@@ -87,7 +89,7 @@ legend{color:var(--muted);padding:0;margin-bottom:8px}
 .cfoot{padding:16px 20px 20px}
 .total{display:flex;justify-content:space-between;margin-bottom:12px;font-size:18px}
 .empty{padding:0 20px 20px;color:var(--muted)}
-@media (min-width:720px){.dbody{grid-template-columns:1fr 1fr}}
+@media (min-width:720px){.dbody{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (hover:hover){
 .card:hover{transform:translateY(-6px)}
 .card:hover .ph{border-color:var(--text);background-size:78%}
@@ -108,7 +110,7 @@ legend{color:var(--muted);padding:0;margin-bottom:8px}
 <main>
 <div class="brand" role="img" aria-label="Bugaloutfit"></div>
 <p class="lead">Ropa de alto gramaje para hombre y mujer.</p>
-<div class="notice" role="note"><strong>En este momento las prendas son por encargo</strong><span>Pide la tuya; la traemos para ti.</span><span class="price">Precio: $80.000</span></div>
+<div class="notice" role="note"><strong>Todas las prendas son por encargo</strong><span>Ninguna está disponible de inmediato; la traemos para ti.</span><span class="price">Precio: $80.000</span></div>
 <div class="chips" id="chips"></div>
 <section class="grid" id="grid"></section>
 <section class="order">
