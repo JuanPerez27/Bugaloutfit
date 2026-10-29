@@ -130,9 +130,11 @@ const WA="573027463322";
 const SIZES=["S","M","L","XL"];
 const COL={"Negro":"#000","Blanco":"#f2f2f2","Azul claro":"#9cc7ea"};
 function src(x){return "img/"+x+".webp"}
-const T=[["Saint Theory · Ángel","saint-theory-angel"],["Saint Theory · Pasamontañas","saint-theory-pasamontanas"],["Saint Theory · Gótica","saint-theory-gotica"],["Monastery · Astronauta","monastery"],["Hugo · Frenzy’93","hugo-frenzy93"],["Y/OUT · Studio Lab","yout"],["EME Studios","eme-studios"],["Guess · Triángulo bordado","guess"],["Karl Lagerfeld · Círculos","karl-lagerfeld"],["AP Crown · Cardo","ap-crown"],["Calvin Klein · Ondas","calvin-klein"]];
-const PRODUCTS=T.map(([n,s],i)=>({id:i,n,c:"Camisetas",colors:["Negro","Blanco"],price:80000,f:[s+"-1",s+"-2"]}));
-PRODUCTS.push({id:11,n:"Pantalón Star",c:"Pantalones",colors:["Negro"],price:null,f:[]},{id:12,n:"Pantaloneta Nike Tech",c:"Pantalonetas",colors:["Azul claro"],price:null,f:[]});
+const T=[["Saint Theory · Ángel","saint-theory-angel",1],["Saint Theory · Pasamontañas","saint-theory-pasamontanas",1],["Saint Theory · Gótica","saint-theory-gotica",1],["Monastery · Astronauta","monastery",1],["Hugo · Frenzy’93","hugo-frenzy93",1],["Y/OUT · Studio Lab","yout",1],["EME Studios","eme-studios",1],["Guess · Triángulo bordado","guess",2],["Karl Lagerfeld · Círculos","karl-lagerfeld",2],["AP Crown · Cardo","ap-crown",1],["Calvin Klein · Ondas","calvin-klein",1]];
+const PRODUCTS=T.map(([n,s,k],i)=>({id:i,n,c:"Camisetas",price:80000,colors:{"Negro":[s+"-"+k],"Blanco":[s+"-"+(3-k)]}}));
+PRODUCTS.push({id:11,n:"Pantalón Star",c:"Pantalones",price:null,colors:{"Negro":[]}},{id:12,n:"Pantaloneta Nike Tech",c:"Pantalonetas",price:null,colors:{"Azul claro":[]}});
+const cnames=p=>Object.keys(p.colors);
+const pics=p=>cnames(p).map(c=>p.colors[c][0]).filter(Boolean);
 const $=s=>document.querySelector(s);
 const money=n=>"$"+n.toLocaleString("es-CO");
 const priceTxt=p=>p.price?money(p.price):"Por confirmar";
@@ -157,20 +159,27 @@ b.className="chip";b.textContent=c;b.setAttribute("aria-pressed",c===active);
 b.onclick=()=>{active=c;render()};
 chips.appendChild(b);
 });
-grid.innerHTML=PRODUCTS.filter(p=>active==="Todo"||p.c===active).map(p=>`<article class="card"><button type="button" class="ph${p.f.length?" has":""}" data-id="${p.id}" aria-label="Ver ${p.n}">${p.f.map((x,i)=>`<img src="${src(x)}" alt="" loading="lazy">`).join("")}</button><h3>${p.n}</h3><p class="meta">${p.c} · ${p.colors.join(" y ")}</p><ul class="rows"><li><span>Precio</span><span>${priceTxt(p)}</span></li><li><span>Tallas</span><span>${SIZES.join(" · ")}</span></li></ul><button type="button" class="btn alt" data-id="${p.id}">Elegir talla y color</button></article>`).join("");
+grid.innerHTML=PRODUCTS.filter(p=>active==="Todo"||p.c===active).map(p=>`<article class="card"><button type="button" class="ph${pics(p).length?" has":""}" data-id="${p.id}" aria-label="Ver ${p.n}">${pics(p).map(x=>`<img src="${src(x)}" alt="" loading="lazy">`).join("")}</button><h3>${p.n}</h3><p class="meta">${p.c} · ${cnames(p).join(" y ")}</p><ul class="rows"><li><span>Precio</span><span>${priceTxt(p)}</span></li><li><span>Tallas</span><span>${SIZES.join(" · ")}</span></li></ul><button type="button" class="btn alt" data-id="${p.id}">Elegir talla y color</button></article>`).join("");
+}
+function gal(f,n){
+const main=f.length?`<img class="main" id="mainimg" src="${src(f[0])}" alt="${n}">`:`<div class="main"></div>`;
+const th=f.length>1?`<div class="thumbs">${f.map((x,i)=>`<button type="button" data-i="${i}" aria-label="Foto ${i+1}" aria-current="${i===0}"><img src="${src(x)}" alt=""></button>`).join("")}</div>`:"";
+return main+th;
 }
 function showDetail(id){
-const p=PRODUCTS[id];
-const main=p.f.length?`<img class="main" id="mainimg" src="${src(p.f[0])}" alt="${p.n}">`:`<div class="main"></div>`;
-const th=p.f.length>1?`<div class="thumbs">${p.f.map((x,i)=>`<button type="button" data-i="${i}" aria-label="Foto ${i+1}" aria-current="${i===0}"><img src="${src(x)}" alt=""></button>`).join("")}</div>`:"";
-const cols=p.colors.map((c,i)=>`<label class="opt"><input type="radio" name="color" value="${c}"${i?"":" checked"}><span><i class="sw" style="--c:${COL[c]}"></i>${c}</span></label>`).join("");
+const p=PRODUCTS[id],names=cnames(p);
+const copts=names.map((c,i)=>`<label class="opt"><input type="radio" name="color" value="${c}"${i?"":" checked"}><span><i class="sw" style="--c:${COL[c]}"></i>${c}</span></label>`).join("");
 const sz=SIZES.map(s=>`<label class="opt"><input type="radio" name="size" value="${s}"><span>${s}</span></label>`).join("");
-const more=PRODUCTS.filter(o=>o.id!==id).map(o=>`<button type="button" class="mi" data-go="${o.id}">${o.f.length?`<img src="${src(o.f[0])}" alt="" loading="lazy">`:"<i></i>"}<span>${o.n}</span></button>`).join("");
-dlg.innerHTML=`<button type="button" class="close" aria-label="Cerrar" data-close>✕</button><div class="dbody"><div class="gal">${main}${th}</div><div class="info"><h2>${p.n}</h2><p class="meta">${p.c}</p><p class="price">${priceTxt(p)}</p><fieldset><legend>Color</legend><div class="opts">${cols}</div></fieldset><fieldset><legend>Talla</legend><div class="opts">${sz}</div></fieldset><p class="hint" id="hint"></p><a class="btn" id="buy" target="_blank" rel="noopener" aria-disabled="true">Comprar ahora</a><button type="button" class="btn alt" id="add" aria-disabled="true">Agregar al carrito</button><p class="note">Por encargo. Te confirmamos el tiempo de entrega por WhatsApp.</p></div><section class="more"><h3>Más prendas</h3><div class="strip">${more}</div></section></div>`;
+const more=PRODUCTS.filter(o=>o.id!==id).map(o=>`<button type="button" class="mi" data-go="${o.id}">${pics(o).length?`<img src="${src(pics(o)[0])}" alt="" loading="lazy">`:"<i></i>"}<span>${o.n}</span></button>`).join("");
+dlg.innerHTML=`<button type="button" class="close" aria-label="Cerrar" data-close>✕</button><div class="dbody"><div class="gal">${gal(p.colors[names[0]],p.n)}</div><div class="info"><h2>${p.n}</h2><p class="meta">${p.c}</p><p class="price">${priceTxt(p)}</p><fieldset><legend>Color</legend><div class="opts">${copts}</div></fieldset><fieldset><legend>Talla</legend><div class="opts">${sz}</div></fieldset><p class="hint" id="hint"></p><a class="btn" id="buy" target="_blank" rel="noopener" aria-disabled="true">Comprar ahora</a><button type="button" class="btn alt" id="add" aria-disabled="true">Agregar al carrito</button><p class="note">Por encargo. Te confirmamos el tiempo de entrega por WhatsApp.</p></div><section class="more"><h3>Más prendas</h3><div class="strip">${more}</div></section></div>`;
 dlg.dataset.id=id;
 sync();
 if(!dlg.open)dlg.showModal();
 dlg.scrollTop=0;
+}
+function drawGal(){
+const p=PRODUCTS[+dlg.dataset.id];
+dlg.querySelector(".gal").innerHTML=gal(p.colors[sel().color]||[],p.n);
 }
 function sel(){
 const c=dlg.querySelector("input[name=color]:checked"),s=dlg.querySelector("input[name=size]:checked");
@@ -205,7 +214,7 @@ if(e.target===dlg||e.target.closest("[data-close]")){dlg.close();return}
 const t=e.target.closest(".thumbs button");
 if(t){
 const p=PRODUCTS[+dlg.dataset.id];
-$("#mainimg").src=src(p.f[+t.dataset.i]);
+$("#mainimg").src=src(p.colors[sel().color][+t.dataset.i]);
 dlg.querySelectorAll(".thumbs button").forEach(b=>b.setAttribute("aria-current",String(b===t)));
 return;
 }
@@ -213,7 +222,7 @@ const g=e.target.closest("[data-go]");
 if(g){showDetail(+g.dataset.go);return}
 if(e.target.closest("#add"))addCurrent();
 });
-dlg.addEventListener("change",sync);
+dlg.addEventListener("change",e=>{if(e.target.name==="color")drawGal();sync()});
 cdlg.addEventListener("click",e=>{
 if(e.target===cdlg||e.target.closest("[data-close]")){cdlg.close();return}
 const q=e.target.closest("[data-q]"),r=e.target.closest("[data-rm]");
