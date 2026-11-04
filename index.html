@@ -30,6 +30,7 @@ h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-style:ita
 .ph::after{content:"Foto por agregar";position:absolute;left:12px;bottom:10px;font-size:13px;color:var(--muted)}
 .ph.has::after{display:none}
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease,opacity .4s ease}
+.ph.fit img{object-fit:contain}
 .ph img+img{opacity:0}
 .card h3{font-size:26px;margin:14px 0 4px;transition:letter-spacing .3s ease}
 .meta{color:var(--muted);margin:0 0 12px}
@@ -55,11 +56,11 @@ dialog.cart{margin:0 0 0 auto;height:100dvh;max-height:none;max-width:420px}
 .dbody{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;padding:16px 20px 20px}
 .dbody>*{min-width:0}
 .gal{width:100%;max-width:480px;margin:0 auto}
-.main{display:block;width:100%;max-width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid var(--line);background:var(--surface) var(--logo) center/60% no-repeat}
+.main{display:block;width:100%;max-width:100%;aspect-ratio:var(--ar,3/4);object-fit:var(--fit,cover);border:1px solid var(--line);background:var(--surface) var(--logo) center/60% no-repeat}
 .thumbs{display:flex;gap:8px;margin-top:8px}
 .thumbs button{width:64px;padding:0;border:1px solid var(--line);background:none;cursor:pointer;opacity:.6}
 .thumbs button[aria-current="true"]{opacity:1;border-color:var(--text)}
-.thumbs img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover}
+.thumbs img{display:block;width:100%;aspect-ratio:var(--ar,3/4);object-fit:var(--fit,cover);background:var(--surface)}
 .info h2{font-size:40px;margin-bottom:6px}
 .info .price{font-size:22px;margin:0 0 18px}
 fieldset{border:0;padding:0;margin:0 0 18px}
@@ -104,13 +105,85 @@ legend{color:var(--muted);padding:0;margin-bottom:8px}
 .opt:hover span{border-color:var(--text)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.card:hover{transform:none}}
+body{background:radial-gradient(900px 420px at 50% 0,#171717,transparent 70%),var(--bg)}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 14px}
+.card{cursor:pointer;border-top:0;padding-top:0;animation:rise .5s ease backwards}
+.tag{position:absolute;top:10px;left:10px;z-index:1;padding:3px 8px;border:1px solid var(--text);background:var(--bg);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.card h3{font-size:clamp(19px,5vw,26px);margin:12px 0 4px}
+.cprice{margin:0 0 2px;font-weight:500}
+.card .meta{display:flex;align-items:center;justify-content:space-between;margin:0;font-size:14px}
+.dots{display:flex;gap:5px}
+.qtyrow{display:flex;align-items:center;gap:14px}
+.qtyrow button{width:40px;height:40px;border:1px solid var(--line);border-radius:4px;background:none;font-size:18px;cursor:pointer}
+.qtyrow output{min-width:24px;text-align:center;font-size:18px}
+.actions{position:sticky;bottom:0;z-index:1;padding:12px 0 4px;border-top:1px solid var(--line);background:var(--bg)}
+.lnk{padding:0;border:0;background:none;color:var(--text);text-decoration:underline;cursor:pointer}
+.ci{display:flex;gap:12px}
+.ci>div{display:grid;flex:1;min-width:0;gap:4px}
+.cth{display:block;flex:none;width:64px;aspect-ratio:3/4;object-fit:cover;border:1px solid var(--line);background:var(--surface) var(--logo) center/70% no-repeat}
+.cfoot .lnk{display:block;margin:4px auto 0}
+footer .btn{max-width:320px;margin:16px auto 0}
+dialog[open]{animation:sheet .3s ease}
+dialog.cart[open]{animation:slide .3s ease}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes sheet{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes slide{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+@media (min-width:640px){.grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:28px 20px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+html{scroll-behavior:smooth}
+.topnav{display:flex;justify-content:flex-end;padding-top:12px}
+.topnav a{color:var(--muted);font-size:14px}
+.tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0 0 20px;border:1px solid var(--text)}
+.tab{padding:14px;border:0;background:transparent;color:var(--text);font:italic 800 26px/1 "Barlow Condensed","Arial Narrow",sans-serif;letter-spacing:.04em;cursor:pointer;transition:background .2s,color .2s}
+.tab[aria-selected="true"]{background:var(--text);color:#000}
+.sec{margin:0 0 14px;font-size:36px}
+.chips+.chips{margin-top:-10px}
+.tag.on{background:var(--text);color:#000}
+.st{margin-left:10px;padding:2px 8px;border:1px solid var(--text);font-size:12px;letter-spacing:.12em;text-transform:uppercase;vertical-align:middle}
+.st.on{background:var(--text);color:#000}
+.opt.out span{color:var(--muted);text-decoration:line-through}
+.main[data-zoom]{cursor:zoom-in}
+.emptyst{grid-column:1/-1;padding:28px 20px;border:1px dashed var(--line);text-align:center}
+.emptyst p{margin:0 0 14px;color:var(--muted)}
+.emptyst .btn{max-width:320px;margin:0 auto}
+.about{margin-top:56px;padding-top:32px;border-top:1px solid var(--line)}
+.about h2{font-size:44px}
+.lede{margin:6px 0 16px;font:italic 800 24px/1.1 "Barlow Condensed","Arial Narrow",sans-serif}
+.about>p{max-width:60ch;color:var(--muted)}
+.pillars{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin:24px 0}
+.pillar{padding:20px;border:1px solid var(--text)}
+.pillar b{display:block;font:italic 800 44px/1 "Barlow Condensed","Arial Narrow",sans-serif}
+.pillar h3{margin:8px 0 6px;font-size:24px}
+.pillar p{margin:0;color:var(--muted)}
+.visit{padding:20px;border:1px solid var(--line)}
+.visit h3{margin-bottom:10px;font-size:28px}
+.visit p{margin:0 0 6px}
+.vbtns{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.vbtns .btn{flex:1 1 140px;width:auto;margin:0}
+dialog.zoom{max-width:none;height:100dvh;max-height:none;margin:0;border:0;background:#000;overflow:hidden}
+.zoom::backdrop{background:#000}
+.zstage{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;touch-action:none;cursor:zoom-in}
+.zstage.on{cursor:zoom-out}
+.zstage img{max-width:100%;max-height:100%;object-fit:contain;transform-origin:center;user-select:none;-webkit-user-drag:none;will-change:transform}
+.zbar{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:calc(8px + env(safe-area-inset-top,0px)) 12px 8px;pointer-events:none}
+.zbar>*{pointer-events:auto}
+.zx{width:44px;height:44px;border:1px solid var(--line);background:var(--bg);font-size:20px;cursor:pointer}
+.znav{position:absolute;top:50%;z-index:2;width:48px;height:64px;transform:translateY(-50%);border:0;background:rgba(0,0,0,.55);color:#fff;font-size:34px;cursor:pointer}
+.zl{left:0}
+.zr{right:0}
+@media (min-width:720px){.pillars{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (hover:hover){.tab:hover{background:#1c1c1c}.tab[aria-selected="true"]:hover{background:var(--text)}}
 </style>
 </head>
 <body>
 <main>
+<nav class="topnav"><a href="#quienes-somos">Quiénes somos</a></nav>
 <div class="brand" role="img" aria-label="Bugaloutfit"></div>
 <p class="lead">Ropa de alto gramaje para hombre y mujer.</p>
-<div class="notice" role="note"><strong>Todas las prendas son por encargo</strong><span>Ninguna está disponible de inmediato; la traemos para ti.</span><span class="price">Precio: $80.000</span></div>
+<div class="notice" role="note"><strong>Disponibles y por encargo</strong><span>Disponible: pruébatela hoy en el punto físico. Por encargo: la traemos para ti.</span><span class="price">Desde $80.000</span></div>
+<div class="tabs" id="tabs" role="tablist"></div>
+<h2 class="sec" id="sectitle"></h2>
+<div class="chips" id="avail"></div>
 <div class="chips" id="chips"></div>
 <section class="grid" id="grid"></section>
 <section class="order">
@@ -122,106 +195,197 @@ legend{color:var(--muted);padding:0;margin-bottom:8px}
 <li>La traemos y te la pruebas en nuestro punto físico.</li>
 </ol>
 </section>
-<footer>Pruébate tu prenda en nuestro punto físico · Bugaloutfit</footer>
+<section class="about" id="quienes-somos">
+<h2>Quiénes somos</h2>
+<p class="lede">Ropa de alto gramaje, con carácter.</p>
+<p>Bugaloutfit nace de la idea de dos jóvenes que buscan llevar ropa de alto gramaje y excelente calidad a nuestro pueblo donde puedes conseguir: camisetas, camibusos, sudaderas, pantalonetas y conjuntos para hombre y mujer, de marcas y diseños con identidad.</p>
+<p>Trabajamos con prendas disponibles y por encargo. Tú eliges, te confirmamos el precio y el tiempo de entrega, y puedes ver y medirte tu prenda en nuestro punto físico. Seriedad en cada pedido, exclusividad en cada prenda y un precio que vale lo que recibes.</p>
+<div class="pillars">
+<div class="pillar"><b>01</b><h3>Alto gramaje</h3><p>Telas gruesas y de caída firme, que se sienten distintas desde el primer momento.</p></div>
+<div class="pillar"><b>02</b><h3>Exclusividad</h3><p>Diseños y marcas que no encuentras en cualquier tienda. Si no la tenemos, la traemos para ti.</p></div>
+<div class="pillar"><b>03</b><h3>Atención personal</h3><p>Ves la prenda en nuestro punto físico, te la mides y decides con seguridad.</p></div>
+</div>
+<div class="visit" id="visit"></div>
+</section>
+<footer><p>Pruébate tu prenda en nuestro punto físico · Bugaloutfit</p><a class="btn alt" href="https://wa.me/573027463322" target="_blank" rel="noopener">Escribir por WhatsApp</a></footer>
 </main>
 <button class="fab" id="fab" type="button">Carrito<b id="count">0</b></button>
 <dialog id="detail" aria-label="Detalle de la prenda"></dialog>
 <dialog id="cart" class="cart" aria-label="Carrito"></dialog>
+<dialog id="zoom" class="zoom" aria-label="Zoom de la foto"><div class="zbar"><span id="zcount"></span><button type="button" class="zx" data-zclose aria-label="Cerrar">✕</button></div><div class="zstage" id="zstage"><img id="zimg" alt=""></div><button type="button" class="znav zl" id="zprev" aria-label="Anterior">‹</button><button type="button" class="znav zr" id="znext" aria-label="Siguiente">›</button></dialog>
 <script>
 const WA="573027463322";
-const SIZES=["S","M","L","XL"];
+const INFO={dir:"",hor:"",ig:""};
+const SIZES=["S","M","L","XL"],SIZES_W=["XS","S","M","L"];
 const COL={"Negro":"#000","Blanco":"#f2f2f2","Azul claro":"#9cc7ea"};
 function src(x){return "img/"+x+".webp"}
 const T=[["Saint Theory · Ángel","saint-theory-angel",1],["Saint Theory · Pasamontañas","saint-theory-pasamontanas",1],["Saint Theory · Gótica","saint-theory-gotica",1],["Monastery · Astronauta","monastery",1],["Hugo · Frenzy’93","hugo-frenzy93",1],["Y/OUT · Studio Lab","yout",1],["EME Studios","eme-studios",1],["Guess · Triángulo bordado","guess",2],["Karl Lagerfeld · Círculos","karl-lagerfeld",2],["AP Crown · Cardo","ap-crown",1],["Calvin Klein · Ondas","calvin-klein",1]];
-const PRODUCTS=T.map(([n,s,k],i)=>({id:i,n,c:"Camisetas",price:80000,colors:{"Negro":[s+"-"+k],"Blanco":[s+"-"+(3-k)]}}));
-PRODUCTS.push({id:11,n:"Pantalón Star",c:"Pantalones",price:null,colors:{"Negro":[]}},{id:12,n:"Pantaloneta Nike Tech",c:"Pantalonetas",price:null,colors:{"Azul claro":[]}});
+const PRODUCTS=T.map(([n,s,k],i)=>({id:i,g:"h",n,c:"Camisetas",price:80000,colors:{"Negro":[s+"-"+k],"Blanco":[s+"-"+(3-k)]}}));
+PRODUCTS.push({id:11,g:"h",n:"Pantalón Star",c:"Pantalones",price:null,colors:{"Negro":[]}},{id:12,g:"h",n:"Pantaloneta Nike Tech",c:"Pantalonetas",price:null,colors:{"Azul claro":[]}});
+const NEW=[["Jordan · Jumpman Chenille", ["020", "026", "013"], ["020", "026"]], ["Jordan · Flight Varsity", ["022", "030", "032"], ["022", "030"]], ["Jordan · Air Costuras", ["001", "011"], ["001"]], ["Jordan · Jumpman Minimal", ["017"], ["017"]], ["Jordan · Air Graphic", ["025", "012"], ["025"]], ["Nike · Raglán Gris", ["006", "008", "021"], ["006", "008"]], ["Nike · Growth in Sport", ["027", "018"], ["027"]], ["Nike · Mangas Rayadas", ["029", "031", "003"], ["029", "031"]], ["Lacoste · Cocodrilo Bordado", ["004", "009", "002"], ["004", "009"]], ["Lacoste · Contorno Cosido", ["028", "010", "007", "005"], ["028", "010"]], ["Lacoste · 1927 Dorado", ["015", "014", "016"], ["015", "014"]], ["Lacoste · Cocodrilo Cuero", ["023", "024", "019"], ["023", "024"]]];
+NEW.forEach(([n,g,c],i)=>{const k=g.map(x=>"p"+x);PRODUCTS.push({id:13+i,g:"h",n,c:"Camisetas",price:80000,ar:"2/3",cover:c.map(x=>"p"+x),colors:{"Negro":k,"Blanco":k}})});
 const cnames=p=>Object.keys(p.colors);
-const pics=p=>cnames(p).map(c=>p.colors[c][0]).filter(Boolean);
+const pics=p=>p.cover||cnames(p).map(c=>p.colors[c][0]).filter(Boolean);
+const sizesOf=p=>p.sizes||(p.g==="m"?SIZES_W:SIZES);
+const inStock=(p,s)=>!!(p.stock&&p.stock[s]>0);
+const isAvail=p=>!!p.stock&&Object.values(p.stock).some(q=>q>0);
+const status=(p,s)=>inStock(p,s)?"Disponible":"Por encargo";
 const $=s=>document.querySelector(s);
 const money=n=>"$"+n.toLocaleString("es-CO");
 const priceTxt=p=>p.price?money(p.price):"Por confirmar";
-const chips=$("#chips"),grid=$("#grid"),dlg=$("#detail"),cdlg=$("#cart");
-let cart=[],active="Todo";
+const chips=$("#chips"),avail=$("#avail"),tabs=$("#tabs"),grid=$("#grid"),dlg=$("#detail"),cdlg=$("#cart"),zdlg=$("#zoom"),zimg=$("#zimg"),zst=$("#zstage");
+let cart=[],g="h",av="todo",active="Todo";
 try{cart=JSON.parse(localStorage.getItem("bo-cart")||"[]").filter(i=>PRODUCTS[i.id]&&i.qty>0)}catch(e){cart=[]}
 function save(){try{localStorage.setItem("bo-cart",JSON.stringify(cart))}catch(e){}}
+function setHash(h){try{history.replaceState(null,"","#"+h)}catch(e){}}
 function waUrl(items){
 const tot=items.reduce((s,i)=>s+(PRODUCTS[i.id].price||0)*i.qty,0);
 const open=items.some(i=>!PRODUCTS[i.id].price);
-const rows=items.map(i=>{const p=PRODUCTS[i.id];return `• ${i.qty}x ${p.n} | Color: ${i.color} | Talla: ${i.size} | ${p.price?money(p.price*i.qty):"Precio por confirmar"}`});
-let m="Hola, quiero hacer un pedido en Bugaloutfit (por encargo):\n"+rows.join("\n");
+const rows=items.map(i=>{const p=PRODUCTS[i.id];return `• ${i.qty}x ${p.n} | Color: ${i.color} | Talla: ${i.size} | ${status(p,i.size)} | ${p.price?money(p.price*i.qty):"Precio por confirmar"}`});
+let m="Hola, quiero hacer un pedido en Bugaloutfit:\n"+rows.join("\n");
 if(tot)m+=`\nTotal: ${money(tot)}${open?" + prendas por confirmar":""}`;
 return `https://wa.me/${WA}?text=${encodeURIComponent(m)}`;
 }
-const cats=["Todo",...new Set(PRODUCTS.map(p=>p.c))];
+function card(p){
+const ok=isAvail(p);
+return `<article class="card" data-id="${p.id}"><button type="button" class="ph${pics(p).length?" has":""}${p.ar?" fit":""}"${p.ar?` style="aspect-ratio:${p.ar}"`:""} aria-label="Ver ${p.n}"><span class="tag${ok?" on":""}">${ok?"Disponible":"Por encargo"}</span>${pics(p).map(x=>`<img src="${src(x)}" alt="" loading="lazy">`).join("")}</button><h3>${p.n}</h3><p class="cprice">${priceTxt(p)}</p><p class="meta">${p.c}<span class="dots">${cnames(p).map(c=>`<i class="sw" style="--c:${COL[c]}"></i>`).join("")}</span></p></article>`;
+}
 function render(){
-chips.innerHTML="";
-cats.forEach(c=>{
-const b=document.createElement("button");
-b.className="chip";b.textContent=c;b.setAttribute("aria-pressed",c===active);
-b.onclick=()=>{active=c;render()};
-chips.appendChild(b);
-});
-grid.innerHTML=PRODUCTS.filter(p=>active==="Todo"||p.c===active).map(p=>`<article class="card"><button type="button" class="ph${pics(p).length?" has":""}" data-id="${p.id}" aria-label="Ver ${p.n}">${pics(p).map(x=>`<img src="${src(x)}" alt="" loading="lazy">`).join("")}</button><h3>${p.n}</h3><p class="meta">${p.c} · ${cnames(p).join(" y ")}</p><ul class="rows"><li><span>Precio</span><span>${priceTxt(p)}</span></li><li><span>Tallas</span><span>${SIZES.join(" · ")}</span></li></ul><button type="button" class="btn alt" data-id="${p.id}">Elegir talla y color</button></article>`).join("");
+tabs.innerHTML=[["h","Hombre"],["m","Mujer"]].map(([k,l])=>`<button type="button" role="tab" class="tab" data-g="${k}" aria-selected="${g===k}">${l}</button>`).join("");
+avail.innerHTML=[["todo","Todo"],["disponible","Disponible ahora"],["encargo","Por encargo"]].map(([k,l])=>`<button type="button" class="chip" data-av="${k}" aria-pressed="${av===k}">${l}</button>`).join("");
+const base=PRODUCTS.filter(p=>p.g===g);
+const cats=["Todo",...new Set(base.map(p=>p.c))];
+if(!cats.includes(active))active="Todo";
+chips.innerHTML=cats.map(c=>`<button type="button" class="chip" data-c="${c}" aria-pressed="${c===active}">${c}</button>`).join("");
+$("#sectitle").textContent=g==="m"?"Colección mujer":"Colección hombre";
+const list=base.filter(p=>(active==="Todo"||p.c===active)&&(av==="todo"||(av==="disponible")===isAvail(p))).sort((a,b)=>isAvail(b)-isAvail(a)||(a.c!=="Camisetas")-(b.c!=="Camisetas"));
+const msg=!base.length?"Estamos preparando la colección de mujer. Escríbenos por WhatsApp y te contamos qué prendas hay.":av==="disponible"?"Por ahora no hay prendas disponibles; todo se trae por encargo.":"No hay prendas en esta selección.";
+grid.innerHTML=list.length?list.map(card).join(""):`<div class="emptyst"><p>${msg}</p><a class="btn" target="_blank" rel="noopener" href="https://wa.me/${WA}?text=${encodeURIComponent("Hola, quiero información sobre Bugaloutfit.")}">Escribir por WhatsApp</a></div>`;
 }
 function gal(f,n){
-const main=f.length?`<img class="main" id="mainimg" src="${src(f[0])}" alt="${n}">`:`<div class="main"></div>`;
+const main=f.length?`<img class="main" id="mainimg" data-zoom src="${src(f[0])}" alt="${n}">`:`<div class="main"></div>`;
 const th=f.length>1?`<div class="thumbs">${f.map((x,i)=>`<button type="button" data-i="${i}" aria-label="Foto ${i+1}" aria-current="${i===0}"><img src="${src(x)}" alt=""></button>`).join("")}</div>`:"";
 return main+th;
 }
 function showDetail(id){
-const p=PRODUCTS[id],names=cnames(p);
+const p=PRODUCTS[id],names=cnames(p),ok=isAvail(p);
 const copts=names.map((c,i)=>`<label class="opt"><input type="radio" name="color" value="${c}"${i?"":" checked"}><span><i class="sw" style="--c:${COL[c]}"></i>${c}</span></label>`).join("");
-const sz=SIZES.map(s=>`<label class="opt"><input type="radio" name="size" value="${s}"><span>${s}</span></label>`).join("");
-const more=PRODUCTS.filter(o=>o.id!==id).map(o=>`<button type="button" class="mi" data-go="${o.id}">${pics(o).length?`<img src="${src(pics(o)[0])}" alt="" loading="lazy">`:"<i></i>"}<span>${o.n}</span></button>`).join("");
-dlg.innerHTML=`<button type="button" class="close" aria-label="Cerrar" data-close>✕</button><div class="dbody"><div class="gal">${gal(p.colors[names[0]],p.n)}</div><div class="info"><h2>${p.n}</h2><p class="meta">${p.c}</p><p class="price">${priceTxt(p)}</p><fieldset><legend>Color</legend><div class="opts">${copts}</div></fieldset><fieldset><legend>Talla</legend><div class="opts">${sz}</div></fieldset><p class="hint" id="hint"></p><a class="btn" id="buy" target="_blank" rel="noopener" aria-disabled="true">Comprar ahora</a><button type="button" class="btn alt" id="add" aria-disabled="true">Agregar al carrito</button><p class="note">Por encargo. Te confirmamos el tiempo de entrega por WhatsApp.</p></div><section class="more"><h3>Más prendas</h3><div class="strip">${more}</div></section></div>`;
-dlg.dataset.id=id;
+const sz=sizesOf(p).map(s=>`<label class="opt${ok&&!inStock(p,s)?" out":""}"><input type="radio" name="size" value="${s}"><span>${s}</span></label>`).join("");
+const more=PRODUCTS.filter(o=>o.id!==id&&o.g===p.g).map(o=>`<button type="button" class="mi" data-go="${o.id}">${pics(o).length?`<img src="${src(pics(o)[0])}" alt="" loading="lazy">`:"<i></i>"}<span>${o.n}</span></button>`).join("");
+dlg.innerHTML=`<button type="button" class="close" aria-label="Cerrar" data-close>✕</button><div class="dbody"><div class="gal" style="--ar:${p.ar||"3/4"};--fit:${p.ar?"contain":"cover"}">${gal(p.colors[names[0]],p.n)}</div><div class="info"><h2>${p.n}</h2><p class="meta">${p.c}</p><p class="price">${priceTxt(p)}<span class="st${ok?" on":""}">${ok?"Disponible":"Por encargo"}</span></p><fieldset><legend>Color</legend><div class="opts">${copts}</div></fieldset><fieldset><legend>Talla</legend><div class="opts">${sz}</div></fieldset><fieldset><legend>Cantidad</legend><div class="qtyrow"><button type="button" data-qd="-1" aria-label="Menos">−</button><output id="q">1</output><button type="button" data-qd="1" aria-label="Más">+</button></div></fieldset><div class="actions"><p class="hint" id="hint"></p><a class="btn" id="buy" target="_blank" rel="noopener" aria-disabled="true">Comprar ahora</a><button type="button" class="btn alt" id="add" aria-disabled="true">Agregar al carrito</button></div><p class="note">${ok?"Disponible: pruébatela en el punto físico. Las tallas sin stock se piden por encargo.":"Por encargo. Te confirmamos el tiempo de entrega por WhatsApp."}</p></div>${more?`<section class="more"><h3>Más prendas</h3><div class="strip">${more}</div></section>`:""}</div>`;
+dlg.dataset.id=id;dlg.dataset.i=0;
 sync();
 if(!dlg.open)dlg.showModal();
 dlg.scrollTop=0;
 }
 function drawGal(){
 const p=PRODUCTS[+dlg.dataset.id];
+dlg.dataset.i=0;
 dlg.querySelector(".gal").innerHTML=gal(p.colors[sel().color]||[],p.n);
 }
 function sel(){
 const c=dlg.querySelector("input[name=color]:checked"),s=dlg.querySelector("input[name=size]:checked");
-return {id:+dlg.dataset.id,color:c&&c.value,size:s&&s.value,qty:1};
+return {id:+dlg.dataset.id,color:c&&c.value,size:s&&s.value,qty:+(dlg.querySelector("#q")||{textContent:1}).textContent||1};
 }
 function sync(){
-const s=sel(),ok=!!s.size,buy=$("#buy");
+const s=sel(),p=PRODUCTS[s.id],ok=!!s.size,buy=$("#buy");
 buy.setAttribute("aria-disabled",String(!ok));
 $("#add").setAttribute("aria-disabled",String(!ok));
-$("#hint").textContent=ok?"":"Elige una talla para continuar.";
+$("#hint").textContent=!ok?"Elige una talla para continuar.":isAvail(p)?(inStock(p,s.size)?"Disponible: entrega inmediata.":"Sin stock en esa talla: se pide por encargo."):"";
 if(ok)buy.href=waUrl([s]);else buy.removeAttribute("href");
 }
 function addCurrent(){
 const s=sel();
 if(!s.size)return;
 const k=cart.find(i=>i.id===s.id&&i.color===s.color&&i.size===s.size);
-if(k)k.qty++;else cart.push(s);
+if(k)k.qty+=s.qty;else cart.push(s);
 save();renderCart();
-const b=$("#add");
-b.textContent="Agregado ✓";
-setTimeout(()=>{b.textContent="Agregar al carrito"},1500);
+$("#hint").innerHTML='Agregado al carrito ✓ <button type="button" class="lnk" data-cart>Ver carrito</button>';
 }
 function renderCart(){
 $("#count").textContent=cart.reduce((s,i)=>s+i.qty,0);
 const tot=cart.reduce((s,i)=>s+(PRODUCTS[i.id].price||0)*i.qty,0);
-const items=cart.map((i,x)=>{const p=PRODUCTS[i.id];return `<li class="ci"><b>${p.n}</b><small>${i.color} · Talla ${i.size} · ${priceTxt(p)}</small><div class="qty"><button type="button" data-q="${x}" data-d="-1" aria-label="Quitar uno">−</button><span>${i.qty}</span><button type="button" data-q="${x}" data-d="1" aria-label="Agregar uno">+</button><button type="button" class="rm" data-rm="${x}">Eliminar</button></div></li>`}).join("");
-cdlg.innerHTML=`<button type="button" class="close" aria-label="Cerrar" data-close>✕</button><h2 class="ct">Tu pedido</h2>`+(cart.length?`<ul>${items}</ul><div class="cfoot"><div class="total"><span>Total</span><span>${tot?money(tot):"Por confirmar"}</span></div><a class="btn" target="_blank" rel="noopener" href="${waUrl(cart)}">Enviar pedido por WhatsApp</a><button type="button" class="btn alt" data-clear>Vaciar carrito</button></div>`:`<p class="empty">Tu carrito está vacío.</p>`);
+const items=cart.map((i,x)=>{const p=PRODUCTS[i.id],f=(p.colors[i.color]||[])[0];return `<li class="ci">${f?`<img class="cth" src="${src(f)}" alt="">`:`<i class="cth"></i>`}<div><b>${p.n}</b><small>${i.color} · Talla ${i.size} · ${status(p,i.size)} · ${priceTxt(p)}</small><div class="qty"><button type="button" data-q="${x}" data-d="-1" aria-label="Quitar uno">−</button><span>${i.qty}</span><button type="button" data-q="${x}" data-d="1" aria-label="Agregar uno">+</button><button type="button" class="rm" data-rm="${x}">Eliminar</button></div></div></li>`}).join("");
+cdlg.innerHTML=`<button type="button" class="close" aria-label="Cerrar" data-close>✕</button><h2 class="ct">Tu pedido</h2>`+(cart.length?`<ul>${items}</ul><div class="cfoot"><div class="total"><span>Total</span><span>${tot?money(tot):"Por confirmar"}</span></div><a class="btn" target="_blank" rel="noopener" href="${waUrl(cart)}">Enviar pedido por WhatsApp</a><button type="button" class="btn alt" data-close>Seguir comprando</button><button type="button" class="lnk" data-clear>Vaciar carrito</button></div>`:`<p class="empty">Tu carrito está vacío.</p>`);
 }
+const Z={list:[],i:0,s:1,x:0,y:0,p:new Map(),d0:0,s0:1,sx:0,sy:0,lt:0,moved:false};
+function zApply(){
+const mx=zimg.clientWidth*(Z.s-1)/2,my=zimg.clientHeight*(Z.s-1)/2;
+Z.x=Math.max(-mx,Math.min(mx,Z.x));Z.y=Math.max(-my,Math.min(my,Z.y));
+zimg.style.transform=`translate(${Z.x}px,${Z.y}px) scale(${Z.s})`;
+zst.classList.toggle("on",Z.s>1);
+}
+function zReset(){Z.s=1;Z.x=0;Z.y=0;zApply()}
+function zAt(px,py,s){
+const r=zst.getBoundingClientRect();
+Z.s=s;Z.x=-(px-r.left-r.width/2)*(s-1);Z.y=-(py-r.top-r.height/2)*(s-1);zApply();
+}
+function zShow(i){
+Z.i=(i+Z.list.length)%Z.list.length;
+zimg.src=src(Z.list[Z.i]);
+$("#zcount").textContent=`${Z.i+1} / ${Z.list.length}`;
+$("#zprev").hidden=$("#znext").hidden=Z.list.length<2;
+zReset();
+}
+function openZoom(list,i){if(!list.length)return;Z.list=list;if(!zdlg.open)zdlg.showModal();zShow(i)}
+zst.addEventListener("pointerdown",e=>{
+zst.setPointerCapture(e.pointerId);
+Z.p.set(e.pointerId,{x:e.clientX,y:e.clientY});
+Z.moved=false;Z.sx=e.clientX;Z.sy=e.clientY;
+if(Z.p.size===2){const[a,b]=[...Z.p.values()];Z.d0=Math.hypot(a.x-b.x,a.y-b.y);Z.s0=Z.s}
+});
+zst.addEventListener("pointermove",e=>{
+if(e.pointerType==="mouse"){if(Z.s>1&&!Z.p.size)zAt(e.clientX,e.clientY,Z.s);return}
+const o=Z.p.get(e.pointerId);
+if(!o)return;
+if(Z.p.size===2){
+o.x=e.clientX;o.y=e.clientY;
+const[a,b]=[...Z.p.values()];
+Z.s=Math.max(1,Math.min(4,Z.s0*Math.hypot(a.x-b.x,a.y-b.y)/Z.d0));Z.moved=true;zApply();return;
+}
+const dx=e.clientX-o.x,dy=e.clientY-o.y;
+o.x=e.clientX;o.y=e.clientY;
+if(Math.abs(e.clientX-Z.sx)+Math.abs(e.clientY-Z.sy)>6)Z.moved=true;
+if(Z.s>1){Z.x+=dx;Z.y+=dy;zApply()}
+});
+function zUp(e){
+const was=Z.p.delete(e.pointerId);
+if(!was||e.type==="pointercancel")return;
+if(e.pointerType==="mouse"){if(!Z.moved){if(Z.s>1)zReset();else zAt(e.clientX,e.clientY,2.5)}return}
+const dx=e.clientX-Z.sx;
+if(Z.moved){if(Z.s===1&&!Z.p.size&&Math.abs(dx)>60)zShow(Z.i+(dx<0?1:-1));return}
+const t=Date.now();
+if(t-Z.lt<300){if(Z.s>1)zReset();else zAt(e.clientX,e.clientY,2.5);Z.lt=0}else Z.lt=t;
+}
+zst.addEventListener("pointerup",zUp);
+zst.addEventListener("pointercancel",zUp);
+zst.addEventListener("wheel",e=>{e.preventDefault();zAt(e.clientX,e.clientY,Math.max(1,Math.min(4,Z.s*Math.exp(-e.deltaY*.002))))},{passive:false});
+zdlg.addEventListener("click",e=>{
+if(e.target.closest("[data-zclose]"))zdlg.close();
+else if(e.target.closest("#zprev"))zShow(Z.i-1);
+else if(e.target.closest("#znext"))zShow(Z.i+1);
+});
+zdlg.addEventListener("keydown",e=>{if(e.key==="ArrowLeft")zShow(Z.i-1);if(e.key==="ArrowRight")zShow(Z.i+1)});
+tabs.addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(b){g=b.dataset.g;active="Todo";setHash(g==="m"?"mujer":"hombre");render()}});
+avail.addEventListener("click",e=>{const b=e.target.closest("[data-av]");if(b){av=b.dataset.av;setHash(av==="todo"?(g==="m"?"mujer":"hombre"):av);render()}});
+chips.addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(b){active=b.dataset.c;render()}});
 grid.addEventListener("click",e=>{const b=e.target.closest("[data-id]");if(b)showDetail(+b.dataset.id)});
 dlg.addEventListener("click",e=>{
 if(e.target===dlg||e.target.closest("[data-close]")){dlg.close();return}
+if(e.target.matches("[data-zoom]")){const p=PRODUCTS[+dlg.dataset.id],all=[...new Set(cnames(p).flatMap(c=>p.colors[c]))],cur=p.colors[sel().color][+dlg.dataset.i||0];openZoom(all,Math.max(0,all.indexOf(cur)));return}
 const t=e.target.closest(".thumbs button");
 if(t){
 const p=PRODUCTS[+dlg.dataset.id];
+dlg.dataset.i=t.dataset.i;
 $("#mainimg").src=src(p.colors[sel().color][+t.dataset.i]);
 dlg.querySelectorAll(".thumbs button").forEach(b=>b.setAttribute("aria-current",String(b===t)));
 return;
 }
-const g=e.target.closest("[data-go]");
-if(g){showDetail(+g.dataset.go);return}
+const g2=e.target.closest("[data-go]");
+if(g2){showDetail(+g2.dataset.go);return}
+const qd=e.target.closest("[data-qd]");
+if(qd){const o=$("#q");o.textContent=Math.min(9,Math.max(1,+o.textContent+ +qd.dataset.qd));sync();return}
+if(e.target.closest("[data-cart]")){dlg.close();renderCart();cdlg.showModal();return}
 if(e.target.closest("#add"))addCurrent();
 });
 dlg.addEventListener("change",e=>{if(e.target.name==="color")drawGal();sync()});
@@ -235,8 +399,24 @@ else return;
 save();renderCart();
 });
 $("#fab").onclick=()=>{renderCart();cdlg.showModal()};
+function route(){
+const h=location.hash.slice(1);
+if(h==="mujer")g="m";else if(h==="hombre")g="h";else if(h==="disponible"||h==="encargo")av=h;else return;
+active="Todo";render();
+}
+addEventListener("hashchange",route);
+(function(){
+const rows=[];
+if(INFO.dir)rows.push(`<p><b>Dirección:</b> ${INFO.dir}</p>`);
+if(INFO.hor)rows.push(`<p><b>Horario:</b> ${INFO.hor}</p>`);
+const btns=[`<a class="btn" target="_blank" rel="noopener" href="https://wa.me/${WA}">WhatsApp</a>`];
+if(INFO.ig)btns.push(`<a class="btn alt" target="_blank" rel="noopener" href="https://instagram.com/${INFO.ig}">Instagram</a>`);
+if(INFO.dir)btns.push(`<a class="btn alt" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(INFO.dir)}">Cómo llegar</a>`);
+$("#visit").innerHTML=`<h3>Visítanos</h3>${rows.join("")||"<p>Escríbenos por WhatsApp y coordinamos para que veas y te midas tu prenda.</p>"}<div class="vbtns">${btns.join("")}</div>`;
+})();
 render();
 renderCart();
+route();
 </script>
 </body>
 </html>
