@@ -1,0 +1,444 @@
+[
+    {
+        "id":  "amiri-alambre",
+        "nombre":  "Amiri Alambre",
+        "marca":  "Amiri",
+        "diseno":  "Alambre de púas",
+        "color":  "Blanco jaspeado",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "L"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta de alto gramaje con estampado de alambre de púas. Una pinta diferente y con mucho estilo. 💎",
+        "foto":  "img/Amiri Alambre 1.jpeg",
+        "fotos":  [
+                      "img/Amiri Alambre 1.jpeg",
+                      "img/Amiri Alambre 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "burberry-polo-beige",
+        "nombre":  "Burberry Polo Beige",
+        "marca":  "Burberry",
+        "diseno":  "Polo",
+        "color":  "Beige",
+        "tipo":  "Polo",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "L"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta tipo polo de alto gramaje con logo bordado. Elegante para salir o para ir a trabajar. 💎",
+        "foto":  "img/Burberry Polo Beige.jpeg",
+        "fotos":  [
+                      "img/Burberry Polo Beige.jpeg"
+                  ]
+    },
+    {
+        "id":  "clemont-corazon-blanco",
+        "nombre":  "Clemont Corazon Blanco",
+        "marca":  "Clemont",
+        "diseno":  "Corazón rojo",
+        "color":  "Blanco",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "M"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta blanca de alto gramaje con corazón rojo en el pecho. Sencilla, limpia y combina con todo. 💎",
+        "foto":  "img/Clemont Corazon Blanco 1.jpeg",
+        "fotos":  [
+                      "img/Clemont Corazon Blanco 1.jpeg",
+                      "img/Clemont Corazon Blanco 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "clemont-corazon-negro",
+        "nombre":  "Clemont Corazon Negro",
+        "marca":  "Clemont",
+        "diseno":  "Corazón rojo",
+        "color":  "Negro",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "encargo",
+        "tallas":  [
+                       "S",
+                       "M",
+                       "L",
+                       "XL"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta negra de alto gramaje con corazón rojo en el pecho. Un clásico que nunca falla. 💎",
+        "foto":  "img/Clemont Corazon Negro 1.jpeg",
+        "fotos":  [
+                      "img/Clemont Corazon Negro 1.jpeg",
+                      "img/Clemont Corazon Negro 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "clemont-flores",
+        "nombre":  "Clemont Flores",
+        "marca":  "Clemont",
+        "diseno":  "Flores doradas",
+        "color":  "Blanco",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "M"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta blanca de alto gramaje con estampado de flores doradas. Elegante sin dejar de ser streetwear. 💎",
+        "foto":  "img/Clemont Flores 1.jpeg",
+        "fotos":  [
+                      "img/Clemont Flores 1.jpeg",
+                      "img/Clemont Flores 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "godspeed-costuras",
+        "nombre":  "Godspeed Costuras",
+        "marca":  "Godspeed",
+        "diseno":  "Costuras a la vista",
+        "color":  "Azul grisáceo lavado",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "M (reducido)",
+                       "XL (reducido)"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta de alto gramaje con costuras por fuera y efecto lavado. Tiene ese estilo desgastado que está de moda. 💎",
+        "foto":  "img/Godspeed Costuras 1.jpeg",
+        "fotos":  [
+                      "img/Godspeed Costuras 1.jpeg",
+                      "img/Godspeed Costuras 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "godspeed-jockey",
+        "nombre":  "Godspeed Jockey",
+        "marca":  "Godspeed",
+        "diseno":  "Jockey / Out of many, one",
+        "color":  "Crema",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "M"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta de alto gramaje con estampado grande de un jockey en la espalda y la frase \"Out of many, one\". Para los que les gusta resaltar. 💎",
+        "foto":  "img/Godspeed Jockey 1.jpeg",
+        "fotos":  [
+                      "img/Godspeed Jockey 1.jpeg",
+                      "img/Godspeed Jockey 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "godspeed-ovni",
+        "nombre":  "Godspeed OVNI",
+        "marca":  "Godspeed",
+        "diseno":  "OVNI / E Pluribus Unum",
+        "color":  "Crema",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "M"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta de alto gramaje con estampado de OVNI al frente y la G de Godspeed en la espalda. Llamativa y original. 💎",
+        "foto":  "img/Godspeed OVNI 1.jpeg",
+        "fotos":  [
+                      "img/Godspeed OVNI 1.jpeg",
+                      "img/Godspeed OVNI 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "godspeed-surfshop",
+        "nombre":  "Godspeed Surfshop",
+        "marca":  "Godspeed",
+        "diseno":  "Surfshop",
+        "color":  "Blanco",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "M"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta de alto gramaje con estampado completo de surf al frente y la G de Godspeed en la espalda. De las más llamativas. 💎",
+        "foto":  "img/Godspeed Surfshop 1.jpeg",
+        "fotos":  [
+                      "img/Godspeed Surfshop 1.jpeg",
+                      "img/Godspeed Surfshop 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "hellstar-calavera",
+        "nombre":  "Hellstar Calavera",
+        "marca":  "Hellstar",
+        "diseno":  "Calavera y estrellas",
+        "color":  "Gris claro",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "L"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta de alto gramaje con el logo de Hellstar al frente y calavera con estrellas en la espalda. Estilo urbano puro. 💎",
+        "foto":  "img/Hellstar Calavera 1.jpeg",
+        "fotos":  [
+                      "img/Hellstar Calavera 1.jpeg",
+                      "img/Hellstar Calavera 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "hermes-polo-cafe",
+        "nombre":  "Hermes Polo Cafe",
+        "marca":  "Hermès",
+        "diseno":  "Polo",
+        "color":  "Café",
+        "tipo":  "Polo",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "M"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta tipo polo de alto gramaje con la H bordada en el pecho. Un color distinto que se ve muy bien. 💎",
+        "foto":  "img/Hermes Polo Cafe.jpeg",
+        "fotos":  [
+                      "img/Hermes Polo Cafe.jpeg"
+                  ]
+    },
+    {
+        "id":  "hugo-boss-polo-blanco",
+        "nombre":  "Hugo Boss Polo Blanco",
+        "marca":  "Hugo Boss",
+        "diseno":  "Polo",
+        "color":  "Blanco",
+        "tipo":  "Polo",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "L"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta tipo polo de alto gramaje con parche en el pecho. Fresca y elegante, sirve para cualquier ocasión. 💎",
+        "foto":  "img/Hugo Boss Polo Blanco.jpeg",
+        "fotos":  [
+                      "img/Hugo Boss Polo Blanco.jpeg"
+                  ]
+    },
+    {
+        "id":  "hugo-boss-polo-negro",
+        "nombre":  "Hugo Boss Polo Negro",
+        "marca":  "Hugo Boss",
+        "diseno":  "Polo",
+        "color":  "Negro",
+        "tipo":  "Polo",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "M"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta tipo polo de alto gramaje con parche en el pecho. Se ve bien vestida o con jean. 💎",
+        "foto":  "img/Hugo Boss Polo Negro.jpeg",
+        "fotos":  [
+                      "img/Hugo Boss Polo Negro.jpeg"
+                  ]
+    },
+    {
+        "id":  "loro-piana-polo-azul",
+        "nombre":  "Loro Piana Polo Azul",
+        "marca":  "Loro Piana",
+        "diseno":  "Polo",
+        "color":  "Azul marino",
+        "tipo":  "Polo",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "M"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta tipo polo azul oscuro de alto gramaje con cuello de rayas. Un estilo fino y sobrio. 💎",
+        "foto":  "img/Loro Piana Polo Azul.jpeg",
+        "fotos":  [
+                      "img/Loro Piana Polo Azul.jpeg"
+                  ]
+    },
+    {
+        "id":  "monastery-rayas",
+        "nombre":  "Monastery Rayas",
+        "marca":  "Monastery",
+        "diseno":  "Rayas con letras",
+        "color":  "Negro",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "encargo",
+        "tallas":  [
+                       "S",
+                       "M",
+                       "L",
+                       "XL"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta negra de alto gramaje con rayas hechas con el nombre de la marca. Fina, diferente y fácil de combinar. 💎",
+        "foto":  "img/Monastery Rayas 1.jpeg",
+        "fotos":  [
+                      "img/Monastery Rayas 1.jpeg",
+                      "img/Monastery Rayas 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "saint-theory-alas",
+        "nombre":  "Saint Theory Alas",
+        "marca":  "Saint Theory",
+        "diseno":  "Alas y cadena",
+        "color":  "Azul",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "L"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta azul de alto gramaje con alas y cadena en la espalda y logo pequeño al frente. Un color que resalta. 💎",
+        "foto":  "img/Saint Theory Alas 1.jpeg",
+        "fotos":  [
+                      "img/Saint Theory Alas 1.jpeg",
+                      "img/Saint Theory Alas 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "saint-theory-cursiva",
+        "nombre":  "Saint Theory Cursiva",
+        "marca":  "Saint Theory",
+        "diseno":  "Logo en cursiva",
+        "color":  "Blanco",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "encargo",
+        "tallas":  [
+                       "L"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta blanca de alto gramaje con el logo en letra cursiva al frente y en grande en la espalda. Sencilla pero con presencia. 💎",
+        "foto":  "img/Saint Theory Cursiva 1.jpeg",
+        "fotos":  [
+                      "img/Saint Theory Cursiva 1.jpeg",
+                      "img/Saint Theory Cursiva 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "supreme-pasamontanas",
+        "nombre":  "Supreme Pasamontanas",
+        "marca":  "Supreme",
+        "diseno":  "Pasamontañas",
+        "color":  "Crema",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "XL"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta de alto gramaje con estampado grande de pasamontañas al frente y logo en el cuello. Para los que saben de marcas. 💎",
+        "foto":  "img/Supreme Pasamontanas 1.jpeg",
+        "fotos":  [
+                      "img/Supreme Pasamontanas 1.jpeg",
+                      "img/Supreme Pasamontanas 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "undergold-pajaro",
+        "nombre":  "Undergold Pajaro",
+        "marca":  "Undergold",
+        "diseno":  "Pájaro / The chosen one is forever",
+        "color":  "Negro",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "L"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta negra de alto gramaje con pájaro al frente y la frase \"The chosen one is forever\" en la espalda. 💎",
+        "foto":  "img/Undergold Pajaro 1.jpeg",
+        "fotos":  [
+                      "img/Undergold Pajaro 1.jpeg",
+                      "img/Undergold Pajaro 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "undergold-rosa",
+        "nombre":  "Undergold Rosa",
+        "marca":  "Undergold",
+        "diseno":  "Rosa en cúpula",
+        "color":  "Blanco",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "M"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta de alto gramaje con el logo de Undergold al frente y estampado de rosa en cúpula en la espalda. 💎",
+        "foto":  "img/Undergold Rosa 1.jpeg",
+        "fotos":  [
+                      "img/Undergold Rosa 1.jpeg",
+                      "img/Undergold Rosa 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "undergold-undgld-blanco",
+        "nombre":  "Undergold UNDGLD Blanco",
+        "marca":  "Undergold",
+        "diseno":  "UNDGLD / Figura en llamas",
+        "color":  "Blanco",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "M"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta blanca de alto gramaje con el logo UNDGLD al frente y una figura entre llamas en la espalda. 💎",
+        "foto":  "img/Undergold UNDGLD Blanco 1.jpeg",
+        "fotos":  [
+                      "img/Undergold UNDGLD Blanco 1.jpeg",
+                      "img/Undergold UNDGLD Blanco 2.jpeg"
+                  ]
+    },
+    {
+        "id":  "undergold-undgld-negro",
+        "nombre":  "Undergold UNDGLD Negro",
+        "marca":  "Undergold",
+        "diseno":  "UNDGLD / Figura en llamas",
+        "color":  "Negro",
+        "tipo":  "Camiseta",
+        "genero":  "Hombre",
+        "estado":  "disponible",
+        "tallas":  [
+                       "M"
+                   ],
+        "precio":  80000,
+        "descripcion":  "Camiseta negra de alto gramaje con el logo UNDGLD al frente y una figura entre llamas en la espalda. 💎",
+        "foto":  "img/Undergold UNDGLD Negro 1.jpeg",
+        "fotos":  [
+                      "img/Undergold UNDGLD Negro 1.jpeg",
+                      "img/Undergold UNDGLD Negro 2.jpeg"
+                  ]
+    }
+]
