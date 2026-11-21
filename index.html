@@ -47,7 +47,12 @@ h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-style:ita
 .order ol{margin:0;padding-left:22px}
 .order li{padding:6px 0 6px 6px}
 footer{margin-top:40px;text-align:center;color:var(--muted);font-size:14px}
-.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:5;background:var(--text);color:#000;border:0;border-radius:999px;padding:14px 20px;font-weight:500;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.6)}
+.dock{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:5;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.fab{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--text);color:#000;border:0;border-radius:999px;padding:14px 20px;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;box-shadow:0 4px 20px rgba(0,0,0,.6)}
+.fab.round{width:52px;height:52px;padding:0}
+.fab.round svg{width:26px;height:26px;fill:currentColor}
+.fab.wa{background:#25d366}
+.fab.ig{background:#fff}
 .fab b{background:#000;color:var(--text);border-radius:999px;padding:1px 8px;margin-left:8px;font-weight:500}
 dialog{padding:0;border:1px solid var(--text);background:var(--bg);color:var(--text);width:100%;max-width:920px;max-height:calc(100dvh - 24px);overflow:auto;overflow-x:hidden}
 dialog::backdrop{background:rgba(0,0,0,.82)}
@@ -210,13 +215,13 @@ dialog.zoom{max-width:none;height:100dvh;max-height:none;margin:0;border:0;backg
 </section>
 <footer><p>Pruébate tu prenda en nuestro punto físico · Bugaloutfit</p><a class="btn alt" href="https://wa.me/573027463322" target="_blank" rel="noopener">Escribir por WhatsApp</a></footer>
 </main>
-<button class="fab" id="fab" type="button">Carrito<b id="count">0</b></button>
+<div class="dock"><a class="fab round wa" id="fwa" target="_blank" rel="noopener" aria-label="WhatsApp" href="https://wa.me/573027463322?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Bugaloutfit."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.9L2 22l5.3-1.4A9.9 9.9 0 1 0 12.04 2zm5.8 14.1c-.25.7-1.45 1.35-2 1.4-.5.05-1.15.07-1.85-.12-.4-.13-.95-.3-1.6-.6-2.8-1.2-4.6-4-4.75-4.2-.13-.2-1.1-1.45-1.1-2.8s.7-2 .95-2.25c.25-.27.55-.33.73-.33h.52c.17 0 .4-.06.6.45.25.6.85 2.05.92 2.2.07.15.12.32.02.5-.1.2-.15.32-.3.5-.15.17-.32.37-.45.5-.15.15-.3.3-.13.6.17.3.77 1.27 1.65 2.05 1.13 1 2.1 1.3 2.4 1.45.3.15.47.12.65-.07.17-.2.75-.87.95-1.17.2-.3.4-.25.67-.15.27.1 1.72.82 2.02.97.3.15.5.22.57.35.07.12.07.72-.18 1.4z"/></svg></a><a class="fab round ig" id="fig" target="_blank" rel="noopener" aria-label="Instagram" href="https://www.instagram.com/bugaloutfit_"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.3-3.1a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z" fill="#000"/></svg></a><button class="fab" id="fab" type="button">Carrito<b id="count">0</b></button></div>
 <dialog id="detail" aria-label="Detalle de la prenda"></dialog>
 <dialog id="cart" class="cart" aria-label="Carrito"></dialog>
 <dialog id="zoom" class="zoom" aria-label="Zoom de la foto"><div class="zbar"><span id="zcount"></span><button type="button" class="zx" data-zclose aria-label="Cerrar">✕</button></div><div class="zstage" id="zstage"><img id="zimg" alt=""></div><button type="button" class="znav zl" id="zprev" aria-label="Anterior">‹</button><button type="button" class="znav zr" id="znext" aria-label="Siguiente">›</button></dialog>
 <script>
 const WA="573027463322";
-const INFO={dir:"",hor:"",ig:""};
+const INFO={dir:"",hor:"",ig:"bugaloutfit_"};
 const COLHEX=[["marino","#1c2a4a"],["gris\u00e1ceo","#7f93a8"],["azul","#3b6fb0"],["negro","#000"],["blanco","#f2f2f2"],["crema","#efe6d0"],["beige","#d9c7a5"],["caf\u00e9","#6b4a35"],["gris","#bdbdbd"]];
 function hex(c){const l=c.toLowerCase();const m=COLHEX.find(x=>l.includes(x[0]));return m?m[1]:"#888"}
 function src(x){return encodeURI(x)}
@@ -411,7 +416,7 @@ const rows=[];
 if(INFO.dir)rows.push(`<p><b>Dirección:</b> ${INFO.dir}</p>`);
 if(INFO.hor)rows.push(`<p><b>Horario:</b> ${INFO.hor}</p>`);
 const btns=[`<a class="btn" target="_blank" rel="noopener" href="https://wa.me/${WA}">WhatsApp</a>`];
-if(INFO.ig)btns.push(`<a class="btn alt" target="_blank" rel="noopener" href="https://instagram.com/${INFO.ig}">Instagram</a>`);
+if(INFO.ig)btns.push(`<a class="btn alt" target="_blank" rel="noopener" href="https://www.instagram.com/${INFO.ig}">Instagram</a>`);
 if(INFO.dir)btns.push(`<a class="btn alt" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(INFO.dir)}">Cómo llegar</a>`);
 $("#visit").innerHTML=`<h3>Visítanos</h3>${rows.join("")||"<p>Escríbenos por WhatsApp y coordinamos para que veas y te midas tu prenda.</p>"}<div class="vbtns">${btns.join("")}</div>`;
 })();
