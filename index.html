@@ -246,7 +246,7 @@ const $=s=>document.querySelector(s);
 const money=n=>"$"+n.toLocaleString("es-CO");
 const priceTxt=p=>p.price?money(p.price):"Por confirmar";
 const chips=$("#chips"),avail=$("#avail"),tabs=$("#tabs"),grid=$("#grid"),dlg=$("#detail"),cdlg=$("#cart"),zdlg=$("#zoom"),zimg=$("#zimg"),zst=$("#zstage");
-let cart=[],g="h",av="todo",active="Todo";
+let cart=[],g="h",av="inicio",active="Todo";
 try{cart=JSON.parse(localStorage.getItem("bo-cart")||"[]")}catch(e){cart=[]}
 function save(){try{localStorage.setItem("bo-cart",JSON.stringify(cart))}catch(e){}}
 function setHash(h){try{history.replaceState(null,"","#"+h)}catch(e){}}
@@ -276,7 +276,7 @@ const cats=["Todo",...new Set(base.map(p=>p.c))];
 if(!cats.includes(active))active="Todo";
 chips.innerHTML=cats.map(c=>`<button type="button" class="chip" data-c="${c}" aria-pressed="${c===active}">${c}</button>`).join("");
 $("#sectitle").textContent=g==="m"?"Colección mujer":"Colección hombre";
-const list=base.filter(p=>(active==="Todo"||p.c===active)&&(av==="todo"||(av==="disponible"&&isAvail(p))||(av==="encargo"&&!isAvail(p)&&!isSold(p)))).sort((a,b)=>isSold(a)-isSold(b)||isAvail(b)-isAvail(a)||(a.c!=="Camisetas")-(b.c!=="Camisetas"));
+const list=base.filter(p=>(active==="Todo"||p.c===active)&&((av==="inicio"&&!isSold(p))||av==="todo"||(av==="disponible"&&isAvail(p))||(av==="encargo"&&!isAvail(p)&&!isSold(p)))).sort((a,b)=>isSold(a)-isSold(b)||isAvail(b)-isAvail(a)||(a.c!=="Camisetas")-(b.c!=="Camisetas"));
 const msg=!base.length?"Estamos preparando la colección de mujer. Escríbenos por WhatsApp y te contamos qué prendas hay.":av==="disponible"?"Por ahora no hay prendas disponibles; todo se trae por encargo.":"No hay prendas en esta selección.";
 grid.innerHTML=list.length?list.map(card).join(""):`<div class="emptyst"><p>${msg}</p><a class="btn" target="_blank" rel="noopener" href="https://wa.me/${WA}?text=${encodeURIComponent("Hola, quiero información sobre Bugaloutfit.")}">Escribir por WhatsApp</a></div>`;
 }
@@ -389,7 +389,7 @@ else if(e.target.closest("#znext"))zShow(Z.i+1);
 });
 zdlg.addEventListener("keydown",e=>{if(e.key==="ArrowLeft")zShow(Z.i-1);if(e.key==="ArrowRight")zShow(Z.i+1)});
 tabs.addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(b){g=b.dataset.g;active="Todo";setHash(g==="m"?"mujer":"hombre");render()}});
-avail.addEventListener("click",e=>{const b=e.target.closest("[data-av]");if(b){av=b.dataset.av;setHash(av==="todo"?(g==="m"?"mujer":"hombre"):av);render()}});
+avail.addEventListener("click",e=>{const b=e.target.closest("[data-av]");if(b){av=b.dataset.av===av?"inicio":b.dataset.av;setHash(av==="inicio"?(g==="m"?"mujer":"hombre"):av);render()}});
 chips.addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(b){active=b.dataset.c;render()}});
 grid.addEventListener("click",e=>{const b=e.target.closest("[data-id]");if(b)showDetail(b.dataset.id)});
 dlg.addEventListener("click",e=>{
@@ -425,7 +425,7 @@ save();renderCart();
 $("#fab").onclick=()=>{renderCart();cdlg.showModal()};
 function route(){
 const h=location.hash.slice(1);
-if(h==="mujer")g="m";else if(h==="hombre")g="h";else if(h==="disponible"||h==="encargo")av=h;else return;
+if(h==="mujer")g="m";else if(h==="hombre")g="h";else if(h==="disponible"||h==="encargo"||h==="todo")av=h;else return;
 active="Todo";render();
 }
 addEventListener("hashchange",route);
