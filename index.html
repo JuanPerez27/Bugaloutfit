@@ -228,14 +228,17 @@ function hex(c){const l=c.toLowerCase();const m=COLHEX.find(x=>l.includes(x[0]))
 function src(x){return encodeURI(x)}
 let PRODUCTS=[];
 function load(d){
-PRODUCTS=d.map(o=>({id:o.id,g:(o.genero||"").toLowerCase().startsWith("muj")?"m":"h",n:o.nombre,c:(o.tipo||"Prenda")+"s",price:o.precio||null,desc:o.descripcion||"",disp:o.estado==="disponible",tallas:o.tallas||[],colors:{[o.color]:(o.fotos&&o.fotos.length?o.fotos:(o.foto?[o.foto]:[]))}}));
+PRODUCTS=d.map(o=>({id:o.id,g:(o.genero||"").toLowerCase().startsWith("muj")?"m":"h",n:o.nombre,c:(o.tipo||"Prenda")+"s",price:o.precio||null,desc:o.descripcion||"",disp:o.estado==="disponible",stock:+o.stock||0,stockTallas:o.stockTallas||{},tallas:o.tallas||[],colors:{[o.color]:(o.fotos&&o.fotos.length?o.fotos:(o.foto?[o.foto]:[]))}}));
 }
 const cnames=p=>Object.keys(p.colors);
 const pics=p=>cnames(p).map(c=>p.colors[c][0]).filter(Boolean);
 const sizesOf=p=>p.tallas;
-const inStock=(p,s)=>p.disp&&p.tallas.includes(s);
-const isAvail=p=>p.disp;
-const status=(p,s)=>p.disp?"Disponible":"Por encargo";
+const stockOf=(p,s)=>{const k=Object.keys(p.stockTallas||{});return k.length?(+p.stockTallas[s]||0):(p.tallas.includes(s)?p.stock:0)};
+const inStock=(p,s)=>p.disp&&stockOf(p,s)>0;
+const isAvail=p=>p.disp&&p.stock>0;
+const maxQty=(p,s)=>s&&inStock(p,s)?Math.min(9,stockOf(p,s)):9;
+const tagTxt=p=>!p.disp?"Por encargo":p.stock<=0?"Agotado":p.stock===1?"\u00daltima unidad":"Disponible";
+const status=(p,s)=>s?(inStock(p,s)?"Disponible":"Por encargo"):(isAvail(p)?"Disponible":"Por encargo");
 const byId=id=>PRODUCTS.find(p=>p.id===id);
 const $=s=>document.querySelector(s);
 const money=n=>"$"+n.toLocaleString("es-CO");
@@ -261,7 +264,7 @@ fetch(PEDIDOS,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Typ
 }
 function card(p){
 const ok=isAvail(p);
-return `<article class="card" data-id="${p.id}"><button type="button" class="ph${pics(p).length?" has":""}${p.ar?" fit":""}"${p.ar?` style="aspect-ratio:${p.ar}"`:""} aria-label="Ver ${p.n}"><span class="tag${ok?" on":""}">${ok?"Disponible":"Por encargo"}</span>${pics(p).map(x=>`<img src="${src(x)}" alt="" loading="lazy">`).join("")}</button><h3>${p.n}</h3><p class="cprice">${priceTxt(p)}</p><p class="meta">${p.c}<span class="dots">${cnames(p).map(c=>`<i class="sw" style="--c:${hex(c)}"></i>`).join("")}</span></p></article>`;
+return `<article class="card" data-id="${p.id}"><button type="button" class="ph${pics(p).length?" has":""}${p.ar?" fit":""}"${p.ar?` style="aspect-ratio:${p.ar}"`:""} aria-label="Ver ${p.n}"><span class="tag${ok?" on":""}">${tagTxt(p)}</span>${pics(p).map(x=>`<img src="${src(x)}" alt="" loading="lazy">`).join("")}</button><h3>${p.n}</h3><p class="cprice">${priceTxt(p)}</p><p class="meta">${p.c}<span class="dots">${cnames(p).map(c=>`<i class="sw" style="--c:${hex(c)}"></i>`).join("")}</span></p></article>`;
 }
 function render(){
 tabs.innerHTML=[["h","Hombre"],["m","Mujer"]].map(([k,l])=>`<button type="button" role="tab" class="tab" data-g="${k}" aria-selected="${g===k}">${l}</button>`).join("");
@@ -283,9 +286,9 @@ return main+th;
 function showDetail(id){
 const p=byId(id),names=cnames(p),ok=isAvail(p);
 const copts=names.map((c,i)=>`<label class="opt"><input type="radio" name="color" value="${c}"${i?"":" checked"}><span><i class="sw" style="--c:${hex(c)}"></i>${c}</span></label>`).join("");
-const sz=sizesOf(p).map(s=>`<label class="opt${ok&&!inStock(p,s)?" out":""}"><input type="radio" name="size" value="${s}"><span>${s}</span></label>`).join("");
+const sz=sizesOf(p).map(s=>`<label class="opt${p.disp&&!inStock(p,s)?" out":""}"><input type="radio" name="size" value="${s}"><span>${s}</span></label>`).join("");
 const more=PRODUCTS.filter(o=>o.id!==id&&o.g===p.g).map(o=>`<button type="button" class="mi" data-go="${o.id}">${pics(o).length?`<img src="${src(pics(o)[0])}" alt="" loading="lazy">`:"<i></i>"}<span>${o.n}</span></button>`).join("");
-dlg.innerHTML=`<button type="button" class="close" aria-label="Cerrar" data-close>✕</button><div class="dbody"><div class="gal" style="--ar:3/4;--fit:cover">${gal(p.colors[names[0]],p.n)}</div><div class="info"><h2>${p.n}</h2><p class="meta">${p.c}</p>${p.desc?`<p class="desc">${p.desc}</p>`:""}<p class="price">${priceTxt(p)}<span class="st${ok?" on":""}">${ok?"Disponible":"Por encargo"}</span></p><fieldset><legend>Color</legend><div class="opts">${copts}</div></fieldset><fieldset><legend>Talla</legend><div class="opts">${sz}</div></fieldset><fieldset><legend>Cantidad</legend><div class="qtyrow"><button type="button" data-qd="-1" aria-label="Menos">−</button><output id="q">1</output><button type="button" data-qd="1" aria-label="Más">+</button></div></fieldset><div class="actions"><p class="hint" id="hint"></p><a class="btn" id="buy" target="_blank" rel="noopener" aria-disabled="true">Comprar ahora</a><button type="button" class="btn alt" id="add" aria-disabled="true">Agregar al carrito</button></div><p class="note">${ok?"Disponible: pruébatela en el punto físico. Las tallas sin stock se piden por encargo.":"Por encargo. Te confirmamos el tiempo de entrega por WhatsApp."}</p></div>${more?`<section class="more"><h3>Más prendas</h3><div class="strip">${more}</div></section>`:""}</div>`;
+dlg.innerHTML=`<button type="button" class="close" aria-label="Cerrar" data-close>✕</button><div class="dbody"><div class="gal" style="--ar:3/4;--fit:cover">${gal(p.colors[names[0]],p.n)}</div><div class="info"><h2>${p.n}</h2><p class="meta">${p.c}</p>${p.desc?`<p class="desc">${p.desc}</p>`:""}<p class="price">${priceTxt(p)}<span class="st${ok?" on":""}">${tagTxt(p)}</span></p><fieldset><legend>Color</legend><div class="opts">${copts}</div></fieldset><fieldset><legend>Talla</legend><div class="opts">${sz}</div></fieldset><fieldset><legend>Cantidad</legend><div class="qtyrow"><button type="button" data-qd="-1" aria-label="Menos">−</button><output id="q">1</output><button type="button" data-qd="1" aria-label="Más">+</button></div></fieldset><div class="actions"><p class="hint" id="hint"></p><a class="btn" id="buy" target="_blank" rel="noopener" aria-disabled="true">Comprar ahora</a><button type="button" class="btn alt" id="add" aria-disabled="true">Agregar al carrito</button></div><p class="note">${ok?"Disponible: pruébatela en el punto físico. Las tallas sin stock se piden por encargo.":"Por encargo. Te confirmamos el tiempo de entrega por WhatsApp."}</p></div>${more?`<section class="more"><h3>Más prendas</h3><div class="strip">${more}</div></section>`:""}</div>`;
 dlg.dataset.id=id;dlg.dataset.i=0;
 sync();
 if(!dlg.open)dlg.showModal();
@@ -302,16 +305,20 @@ return {id:dlg.dataset.id,color:c&&c.value,size:s&&s.value,qty:+(dlg.querySelect
 }
 function sync(){
 const s=sel(),p=byId(s.id),ok=!!s.size,buy=$("#buy");
+s.qty=+$("#q").textContent||1;
 buy.setAttribute("aria-disabled",String(!ok));
 $("#add").setAttribute("aria-disabled",String(!ok));
-$("#hint").textContent=!ok?"Elige una talla para continuar.":isAvail(p)?(inStock(p,s.size)?"Disponible: entrega inmediata.":"Sin stock en esa talla: se pide por encargo."):"";
+const q=$("#q"),mx=ok?maxQty(p,s.size):9;
+if(+q.textContent>mx)q.textContent=mx;
+const n=ok?stockOf(p,s.size):0;
+$("#hint").textContent=!ok?"Elige una talla para continuar.":p.disp?(inStock(p,s.size)?"Disponible: entrega inmediata."+(n===1?" \u00daltima unidad.":n<=3?` Quedan ${n}.`:""):"Sin stock en esa talla: se pide por encargo."):"";
 if(ok)buy.href=waUrl([s]);else buy.removeAttribute("href");
 }
 function addCurrent(){
 const s=sel();
 if(!s.size)return;
 const k=cart.find(i=>i.id===s.id&&i.color===s.color&&i.size===s.size);
-if(k)k.qty+=s.qty;else cart.push(s);
+if(k)k.qty=Math.min(maxQty(byId(s.id),s.size),k.qty+s.qty);else cart.push(s);
 save();renderCart();
 $("#hint").innerHTML='Agregado al carrito ✓ <button type="button" class="lnk" data-cart>Ver carrito</button>';
 }
@@ -397,7 +404,7 @@ return;
 const g2=e.target.closest("[data-go]");
 if(g2){showDetail(g2.dataset.go);return}
 const qd=e.target.closest("[data-qd]");
-if(qd){const o=$("#q");o.textContent=Math.min(9,Math.max(1,+o.textContent+ +qd.dataset.qd));sync();return}
+if(qd){const o=$("#q"),s=sel();o.textContent=Math.min(maxQty(byId(s.id),s.size),Math.max(1,+o.textContent+ +qd.dataset.qd));sync();return}
 if(e.target.closest("[data-cart]")){dlg.close();renderCart();cdlg.showModal();return}
 if(e.target.closest("#buy")){const s=sel();if(s.size)registrar([s]);return}
 if(e.target.closest("#add"))addCurrent();
@@ -407,7 +414,7 @@ cdlg.addEventListener("click",e=>{
 if(e.target===cdlg||e.target.closest("[data-close]")){cdlg.close();return}
 if(e.target.closest("[data-send]")){registrar(cart);return}
 const q=e.target.closest("[data-q]"),r=e.target.closest("[data-rm]");
-if(q){const i=cart[+q.dataset.q];i.qty+=+q.dataset.d;if(i.qty<=0)cart.splice(+q.dataset.q,1)}
+if(q){const i=cart[+q.dataset.q];i.qty=Math.min(maxQty(byId(i.id),i.size),i.qty+ +q.dataset.d);if(i.qty<=0)cart.splice(+q.dataset.q,1)}
 else if(r)cart.splice(+r.dataset.rm,1);
 else if(e.target.closest("[data-clear]"))cart=[];
 else return;
