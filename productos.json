@@ -11,7 +11,7 @@
                    ],
         "stock":  1,
         "stockTallas":  {
-
+                            "L":  1
                         },
         "precio":  80000,
         "descripcion":  "Camiseta de alto gramaje con estampado de alambre de púas. Una pinta diferente y con mucho estilo. 💎",
@@ -33,7 +33,7 @@
                    ],
         "stock":  1,
         "stockTallas":  {
-
+                            "L":  1
                         },
         "precio":  80000,
         "descripcion":  "Camiseta tipo polo de alto gramaje con logo bordado. Elegante para salir o para ir a trabajar. 💎",
@@ -54,7 +54,7 @@
                    ],
         "stock":  1,
         "stockTallas":  {
-
+                            "M":  1
                         },
         "precio":  80000,
         "descripcion":  "Camiseta blanca de alto gramaje con corazón rojo en el pecho. Sencilla, limpia y combina con todo. 💎",
@@ -70,7 +70,7 @@
         "color":  "Negro",
         "tipo":  "Camiseta",
         "genero":  "Hombre",
-        "estado":  "encargo",
+        "estado":  "agotado",
         "tallas":  [
                        "S",
                        "M",
@@ -101,7 +101,7 @@
                    ],
         "stock":  1,
         "stockTallas":  {
-
+                            "M":  1
                         },
         "precio":  80000,
         "descripcion":  "Camiseta blanca de alto gramaje con estampado de flores doradas. Elegante sin dejar de ser streetwear. 💎",
@@ -120,13 +120,12 @@
         "estado":  "disponible",
         "tallas":  [
                        "M",
-                       "(REDUCIDO)",
-                       "XL",
-                       "(REDUCIDO)"
+                       "XL"
                    ],
-        "stock":  4,
+        "stock":  2,
         "stockTallas":  {
-
+                            "M":  1,
+                            "XL":  1
                         },
         "precio":  80000,
         "descripcion":  "Camiseta de alto gramaje con costuras por fuera y efecto lavado. Tiene ese estilo desgastado que está de moda. 💎",
@@ -148,7 +147,7 @@
                    ],
         "stock":  1,
         "stockTallas":  {
-
+                            "M":  1
                         },
         "precio":  80000,
         "descripcion":  "Camiseta de alto gramaje con estampado grande de un jockey en la espalda y la frase \"Out of many, one\". Para los que les gusta resaltar. 💎",
@@ -170,7 +169,7 @@
                    ],
         "stock":  1,
         "stockTallas":  {
-
+                            "M":  1
                         },
         "precio":  80000,
         "descripcion":  "Camiseta de alto gramaje con estampado de OVNI al frente y la G de Godspeed en la espalda. Llamativa y original. 💎",
@@ -192,7 +191,7 @@
                    ],
         "stock":  1,
         "stockTallas":  {
-
+                            "M":  1
                         },
         "precio":  80000,
         "descripcion":  "Camiseta de alto gramaje con estampado completo de surf al frente y la G de Godspeed en la espalda. De las más llamativas. 💎",
@@ -214,7 +213,7 @@
                    ],
         "stock":  1,
         "stockTallas":  {
-
+                            "L":  1
                         },
         "precio":  80000,
         "descripcion":  "Camiseta de alto gramaje con el logo de Hellstar al frente y calavera con estrellas en la espalda. Estilo urbano puro. 💎",
@@ -230,11 +229,11 @@
         "color":  "Café",
         "tipo":  "Polo",
         "genero":  "Hombre",
-        "estado":  "disponible",
+        "estado":  "agotado",
         "tallas":  [
                        "M"
                    ],
-        "stock":  1,
+        "stock":  0,
         "stockTallas":  {
 
                         },
@@ -251,11 +250,11 @@
         "color":  "Blanco",
         "tipo":  "Polo",
         "genero":  "Hombre",
-        "estado":  "disponible",
+        "estado":  "agotado",
         "tallas":  [
                        "L"
                    ],
-        "stock":  1,
+        "stock":  0,
         "stockTallas":  {
 
                         },
@@ -278,7 +277,7 @@
                    ],
         "stock":  1,
         "stockTallas":  {
-
+                            "M":  1
                         },
         "precio":  80000,
         "descripcion":  "Camiseta tipo polo de alto gramaje con parche en el pecho. Se ve bien vestida o con jean. 💎",
@@ -299,7 +298,7 @@
                    ],
         "stock":  1,
         "stockTallas":  {
-
+                            "M":  1
                         },
         "precio":  80000,
         "descripcion":  "Camiseta tipo polo azul oscuro de alto gramaje con cuello de rayas. Un estilo fino y sobrio. 💎",
@@ -314,7 +313,7 @@
         "color":  "Negro",
         "tipo":  "Camiseta",
         "genero":  "Hombre",
-        "estado":  "encargo",
+        "estado":  "agotado",
         "tallas":  [
                        "S",
                        "M",
@@ -345,7 +344,7 @@
                    ],
         "stock":  1,
         "stockTallas":  {
-
+                            "L":  1
                         },
         "precio":  80000,
         "descripcion":  "Camiseta azul de alto gramaje con alas y cadena en la espalda y logo pequeño al frente. Un color que resalta. 💎",
@@ -361,7 +360,7 @@
         "color":  "Blanco",
         "tipo":  "Camiseta",
         "genero":  "Hombre",
-        "estado":  "encargo",
+        "estado":  "agotado",
         "tallas":  [
                        "L"
                    ],
@@ -389,7 +388,7 @@
                    ],
         "stock":  1,
         "stockTallas":  {
-
+                            "XL":  1
                         },
         "precio":  80000,
         "descripcion":  "Camiseta de alto gramaje con estampado grande de pasamontañas al frente y logo en el cuello. Para los que saben de marcas. 💎",
@@ -405,11 +404,11 @@
         "color":  "Negro",
         "tipo":  "Camiseta",
         "genero":  "Hombre",
-        "estado":  "disponible",
+        "estado":  "agotado",
         "tallas":  [
                        "L"
                    ],
-        "stock":  1,
+        "stock":  0,
         "stockTallas":  {
 
                         },
@@ -427,11 +426,11 @@
         "color":  "Blanco",
         "tipo":  "Camiseta",
         "genero":  "Hombre",
-        "estado":  "disponible",
+        "estado":  "agotado",
         "tallas":  [
                        "M"
                    ],
-        "stock":  1,
+        "stock":  0,
         "stockTallas":  {
 
                         },
@@ -449,11 +448,11 @@
         "color":  "Blanco",
         "tipo":  "Camiseta",
         "genero":  "Hombre",
-        "estado":  "disponible",
+        "estado":  "agotado",
         "tallas":  [
                        "M"
                    ],
-        "stock":  1,
+        "stock":  0,
         "stockTallas":  {
 
                         },
@@ -477,7 +476,7 @@
                    ],
         "stock":  1,
         "stockTallas":  {
-
+                            "M":  1
                         },
         "precio":  80000,
         "descripcion":  "Camiseta negra de alto gramaje con el logo UNDGLD al frente y una figura entre llamas en la espalda. 💎",

@@ -29,6 +29,7 @@ h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-style:ita
 .ph{display:block;width:100%;padding:0;aspect-ratio:3/4;border:1px solid var(--line);background:var(--surface) var(--logo) center/70% no-repeat;position:relative;overflow:hidden;cursor:pointer;transition:border-color .3s ease,background-size .4s ease}
 .ph::after{content:"Foto por agregar";position:absolute;left:12px;bottom:10px;font-size:13px;color:var(--muted)}
 .ph.has::after{display:none}
+.ph.sold img{filter:grayscale(1) brightness(.6)}
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease,opacity .4s ease}
 .ph.fit img{object-fit:contain}
 .ph img+img{opacity:0}
@@ -228,7 +229,7 @@ function hex(c){const l=c.toLowerCase();const m=COLHEX.find(x=>l.includes(x[0]))
 function src(x){return encodeURI(x)}
 let PRODUCTS=[];
 function load(d){
-PRODUCTS=d.map(o=>({id:o.id,g:(o.genero||"").toLowerCase().startsWith("muj")?"m":"h",n:o.nombre,c:(o.tipo||"Prenda")+"s",price:o.precio||null,desc:o.descripcion||"",disp:o.estado==="disponible",stock:+o.stock||0,stockTallas:o.stockTallas||{},tallas:o.tallas||[],colors:{[o.color]:(o.fotos&&o.fotos.length?o.fotos:(o.foto?[o.foto]:[]))}}));
+PRODUCTS=d.map(o=>({id:o.id,g:(o.genero||"").toLowerCase().startsWith("muj")?"m":"h",n:o.nombre,c:(o.tipo||"Prenda")+"s",price:o.precio||null,desc:o.descripcion||"",disp:o.estado==="disponible",sold:o.estado==="agotado",stock:+o.stock||0,stockTallas:o.stockTallas||{},tallas:o.tallas||[],colors:{[o.color]:(o.fotos&&o.fotos.length?o.fotos:(o.foto?[o.foto]:[]))}}));
 }
 const cnames=p=>Object.keys(p.colors);
 const pics=p=>cnames(p).map(c=>p.colors[c][0]).filter(Boolean);
@@ -236,8 +237,9 @@ const sizesOf=p=>p.tallas;
 const stockOf=(p,s)=>{const k=Object.keys(p.stockTallas||{});return k.length?(+p.stockTallas[s]||0):(p.tallas.includes(s)?p.stock:0)};
 const inStock=(p,s)=>p.disp&&stockOf(p,s)>0;
 const isAvail=p=>p.disp&&p.stock>0;
+const isSold=p=>p.sold||(p.disp&&p.stock<=0);
 const maxQty=(p,s)=>s&&inStock(p,s)?Math.min(9,stockOf(p,s)):9;
-const tagTxt=p=>!p.disp?"Por encargo":p.stock<=0?"Agotado":p.stock===1?"\u00daltima unidad":"Disponible";
+const tagTxt=p=>isSold(p)?"Agotado":!p.disp?"Por encargo":p.stock===1?"\u00daltima unidad":"Disponible";
 const status=(p,s)=>s?(inStock(p,s)?"Disponible":"Por encargo"):(isAvail(p)?"Disponible":"Por encargo");
 const byId=id=>PRODUCTS.find(p=>p.id===id);
 const $=s=>document.querySelector(s);
@@ -264,7 +266,7 @@ fetch(PEDIDOS,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Typ
 }
 function card(p){
 const ok=isAvail(p);
-return `<article class="card" data-id="${p.id}"><button type="button" class="ph${pics(p).length?" has":""}${p.ar?" fit":""}"${p.ar?` style="aspect-ratio:${p.ar}"`:""} aria-label="Ver ${p.n}"><span class="tag${ok?" on":""}">${tagTxt(p)}</span>${pics(p).map(x=>`<img src="${src(x)}" alt="" loading="lazy">`).join("")}</button><h3>${p.n}</h3><p class="cprice">${priceTxt(p)}</p><p class="meta">${p.c}<span class="dots">${cnames(p).map(c=>`<i class="sw" style="--c:${hex(c)}"></i>`).join("")}</span></p></article>`;
+return `<article class="card" data-id="${p.id}"><button type="button" class="ph${pics(p).length?" has":""}${p.ar?" fit":""}${isSold(p)?" sold":""}"${p.ar?` style="aspect-ratio:${p.ar}"`:""} aria-label="Ver ${p.n}"><span class="tag${ok?" on":""}">${tagTxt(p)}</span>${pics(p).map(x=>`<img src="${src(x)}" alt="" loading="lazy">`).join("")}</button><h3>${p.n}</h3><p class="cprice">${priceTxt(p)}</p><p class="meta">${p.c}<span class="dots">${cnames(p).map(c=>`<i class="sw" style="--c:${hex(c)}"></i>`).join("")}</span></p></article>`;
 }
 function render(){
 tabs.innerHTML=[["h","Hombre"],["m","Mujer"]].map(([k,l])=>`<button type="button" role="tab" class="tab" data-g="${k}" aria-selected="${g===k}">${l}</button>`).join("");
@@ -274,7 +276,7 @@ const cats=["Todo",...new Set(base.map(p=>p.c))];
 if(!cats.includes(active))active="Todo";
 chips.innerHTML=cats.map(c=>`<button type="button" class="chip" data-c="${c}" aria-pressed="${c===active}">${c}</button>`).join("");
 $("#sectitle").textContent=g==="m"?"Colección mujer":"Colección hombre";
-const list=base.filter(p=>(active==="Todo"||p.c===active)&&(av==="todo"||(av==="disponible")===isAvail(p))).sort((a,b)=>isAvail(b)-isAvail(a)||(a.c!=="Camisetas")-(b.c!=="Camisetas"));
+const list=base.filter(p=>(active==="Todo"||p.c===active)&&(av==="todo"||(av==="disponible"&&isAvail(p))||(av==="encargo"&&!isAvail(p)&&!isSold(p)))).sort((a,b)=>isSold(a)-isSold(b)||isAvail(b)-isAvail(a)||(a.c!=="Camisetas")-(b.c!=="Camisetas"));
 const msg=!base.length?"Estamos preparando la colección de mujer. Escríbenos por WhatsApp y te contamos qué prendas hay.":av==="disponible"?"Por ahora no hay prendas disponibles; todo se trae por encargo.":"No hay prendas en esta selección.";
 grid.innerHTML=list.length?list.map(card).join(""):`<div class="emptyst"><p>${msg}</p><a class="btn" target="_blank" rel="noopener" href="https://wa.me/${WA}?text=${encodeURIComponent("Hola, quiero información sobre Bugaloutfit.")}">Escribir por WhatsApp</a></div>`;
 }
@@ -288,7 +290,7 @@ const p=byId(id),names=cnames(p),ok=isAvail(p);
 const copts=names.map((c,i)=>`<label class="opt"><input type="radio" name="color" value="${c}"${i?"":" checked"}><span><i class="sw" style="--c:${hex(c)}"></i>${c}</span></label>`).join("");
 const sz=sizesOf(p).map(s=>`<label class="opt${p.disp&&!inStock(p,s)?" out":""}"><input type="radio" name="size" value="${s}"><span>${s}</span></label>`).join("");
 const more=PRODUCTS.filter(o=>o.id!==id&&o.g===p.g).map(o=>`<button type="button" class="mi" data-go="${o.id}">${pics(o).length?`<img src="${src(pics(o)[0])}" alt="" loading="lazy">`:"<i></i>"}<span>${o.n}</span></button>`).join("");
-dlg.innerHTML=`<button type="button" class="close" aria-label="Cerrar" data-close>✕</button><div class="dbody"><div class="gal" style="--ar:3/4;--fit:cover">${gal(p.colors[names[0]],p.n)}</div><div class="info"><h2>${p.n}</h2><p class="meta">${p.c}</p>${p.desc?`<p class="desc">${p.desc}</p>`:""}<p class="price">${priceTxt(p)}<span class="st${ok?" on":""}">${tagTxt(p)}</span></p><fieldset><legend>Color</legend><div class="opts">${copts}</div></fieldset><fieldset><legend>Talla</legend><div class="opts">${sz}</div></fieldset><fieldset><legend>Cantidad</legend><div class="qtyrow"><button type="button" data-qd="-1" aria-label="Menos">−</button><output id="q">1</output><button type="button" data-qd="1" aria-label="Más">+</button></div></fieldset><div class="actions"><p class="hint" id="hint"></p><a class="btn" id="buy" target="_blank" rel="noopener" aria-disabled="true">Comprar ahora</a><button type="button" class="btn alt" id="add" aria-disabled="true">Agregar al carrito</button></div><p class="note">${ok?"Disponible: pruébatela en el punto físico. Las tallas sin stock se piden por encargo.":"Por encargo. Te confirmamos el tiempo de entrega por WhatsApp."}</p></div>${more?`<section class="more"><h3>Más prendas</h3><div class="strip">${more}</div></section>`:""}</div>`;
+dlg.innerHTML=`<button type="button" class="close" aria-label="Cerrar" data-close>✕</button><div class="dbody"><div class="gal" style="--ar:3/4;--fit:cover">${gal(p.colors[names[0]],p.n)}</div><div class="info"><h2>${p.n}</h2><p class="meta">${p.c}</p>${p.desc?`<p class="desc">${p.desc}</p>`:""}<p class="price">${priceTxt(p)}<span class="st${ok?" on":""}">${tagTxt(p)}</span></p><fieldset><legend>Color</legend><div class="opts">${copts}</div></fieldset><fieldset><legend>Talla</legend><div class="opts">${sz}</div></fieldset><fieldset><legend>Cantidad</legend><div class="qtyrow"><button type="button" data-qd="-1" aria-label="Menos">−</button><output id="q">1</output><button type="button" data-qd="1" aria-label="Más">+</button></div></fieldset><div class="actions"><p class="hint" id="hint"></p><a class="btn" id="buy" target="_blank" rel="noopener" aria-disabled="true">Comprar ahora</a><button type="button" class="btn alt" id="add" aria-disabled="true">Agregar al carrito</button></div><p class="note">${ok?"Disponible: pruébatela en el punto físico. Las tallas sin stock se piden por encargo.":(isSold(p)?"Esta prenda est\u00e1 agotada. Escr\u00edbenos y la traemos por encargo.":"Por encargo. Te confirmamos el tiempo de entrega por WhatsApp.")}</p></div>${more?`<section class="more"><h3>Más prendas</h3><div class="strip">${more}</div></section>`:""}</div>`;
 dlg.dataset.id=id;dlg.dataset.i=0;
 sync();
 if(!dlg.open)dlg.showModal();
