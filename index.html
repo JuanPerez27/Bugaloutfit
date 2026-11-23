@@ -221,6 +221,7 @@ dialog.zoom{max-width:none;height:100dvh;max-height:none;margin:0;border:0;backg
 <dialog id="zoom" class="zoom" aria-label="Zoom de la foto"><div class="zbar"><span id="zcount"></span><button type="button" class="zx" data-zclose aria-label="Cerrar">✕</button></div><div class="zstage" id="zstage"><img id="zimg" alt=""></div><button type="button" class="znav zl" id="zprev" aria-label="Anterior">‹</button><button type="button" class="znav zr" id="znext" aria-label="Siguiente">›</button></dialog>
 <script>
 const WA="573027463322";
+const PEDIDOS="https://script.google.com/macros/s/AKfycbwIcXTbFMp0m_vSPInhjAdDH1gihnbfmoL80l-eIaOzWw_siGEZ1YuDeW5BBe_6Q_8qiQ/exec";
 const INFO={dir:"",hor:"",ig:"bugaloutfit_"};
 const COLHEX=[["marino","#1c2a4a"],["gris\u00e1ceo","#7f93a8"],["azul","#3b6fb0"],["negro","#000"],["blanco","#f2f2f2"],["crema","#efe6d0"],["beige","#d9c7a5"],["caf\u00e9","#6b4a35"],["gris","#bdbdbd"]];
 function hex(c){const l=c.toLowerCase();const m=COLHEX.find(x=>l.includes(x[0]));return m?m[1]:"#888"}
@@ -251,6 +252,12 @@ const rows=items.map(i=>{const p=byId(i.id);return `• ${i.qty}x ${p.n} | Color
 let m="Hola, quiero hacer un pedido en Bugaloutfit:\n"+rows.join("\n");
 if(tot)m+=`\nTotal: ${money(tot)}${open?" + prendas por confirmar":""}`;
 return `https://wa.me/${WA}?text=${encodeURIComponent(m)}`;
+}
+function registrar(items){
+const lista=items.flatMap(i=>{const p=byId(i.id);if(!p||!i.size)return [];return Array.from({length:i.qty||1},()=>({id:i.id,talla:i.size,precio:p.price||""}))});
+if(!lista.length)return;
+const body=JSON.stringify({items:lista});
+fetch(PEDIDOS,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain;charset=utf-8"},body}).catch(()=>{});
 }
 function card(p){
 const ok=isAvail(p);
@@ -312,7 +319,7 @@ function renderCart(){
 $("#count").textContent=cart.reduce((s,i)=>s+i.qty,0);
 const tot=cart.reduce((s,i)=>s+(byId(i.id).price||0)*i.qty,0);
 const items=cart.map((i,x)=>{const p=byId(i.id),f=(p.colors[i.color]||[])[0];return `<li class="ci">${f?`<img class="cth" src="${src(f)}" alt="">`:`<i class="cth"></i>`}<div><b>${p.n}</b><small>${i.color} · Talla ${i.size} · ${status(p,i.size)} · ${priceTxt(p)}</small><div class="qty"><button type="button" data-q="${x}" data-d="-1" aria-label="Quitar uno">−</button><span>${i.qty}</span><button type="button" data-q="${x}" data-d="1" aria-label="Agregar uno">+</button><button type="button" class="rm" data-rm="${x}">Eliminar</button></div></div></li>`}).join("");
-cdlg.innerHTML=`<button type="button" class="close" aria-label="Cerrar" data-close>✕</button><h2 class="ct">Tu pedido</h2>`+(cart.length?`<ul>${items}</ul><div class="cfoot"><div class="total"><span>Total</span><span>${tot?money(tot):"Por confirmar"}</span></div><a class="btn" target="_blank" rel="noopener" href="${waUrl(cart)}">Enviar pedido por WhatsApp</a><button type="button" class="btn alt" data-close>Seguir comprando</button><button type="button" class="lnk" data-clear>Vaciar carrito</button></div>`:`<p class="empty">Tu carrito está vacío.</p>`);
+cdlg.innerHTML=`<button type="button" class="close" aria-label="Cerrar" data-close>✕</button><h2 class="ct">Tu pedido</h2>`+(cart.length?`<ul>${items}</ul><div class="cfoot"><div class="total"><span>Total</span><span>${tot?money(tot):"Por confirmar"}</span></div><a class="btn" target="_blank" rel="noopener" href="${waUrl(cart)}" data-send>Enviar pedido por WhatsApp</a><button type="button" class="btn alt" data-close>Seguir comprando</button><button type="button" class="lnk" data-clear>Vaciar carrito</button></div>`:`<p class="empty">Tu carrito está vacío.</p>`);
 }
 const Z={list:[],i:0,s:1,x:0,y:0,p:new Map(),d0:0,s0:1,sx:0,sy:0,lt:0,moved:false};
 function zApply(){
@@ -392,11 +399,13 @@ if(g2){showDetail(g2.dataset.go);return}
 const qd=e.target.closest("[data-qd]");
 if(qd){const o=$("#q");o.textContent=Math.min(9,Math.max(1,+o.textContent+ +qd.dataset.qd));sync();return}
 if(e.target.closest("[data-cart]")){dlg.close();renderCart();cdlg.showModal();return}
+if(e.target.closest("#buy")){const s=sel();if(s.size)registrar([s]);return}
 if(e.target.closest("#add"))addCurrent();
 });
 dlg.addEventListener("change",e=>{if(e.target.name==="color")drawGal();sync()});
 cdlg.addEventListener("click",e=>{
 if(e.target===cdlg||e.target.closest("[data-close]")){cdlg.close();return}
+if(e.target.closest("[data-send]")){registrar(cart);return}
 const q=e.target.closest("[data-q]"),r=e.target.closest("[data-rm]");
 if(q){const i=cart[+q.dataset.q];i.qty+=+q.dataset.d;if(i.qty<=0)cart.splice(+q.dataset.q,1)}
 else if(r)cart.splice(+r.dataset.rm,1);
